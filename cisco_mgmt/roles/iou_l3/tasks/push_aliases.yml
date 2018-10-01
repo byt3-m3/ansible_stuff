@@ -1,0 +1,9 @@
+- name: Pushing aliases to lab devices
+  ios_config:
+    src: ./templates/aliases.j2
+    provider: "{{ cli }}"
+  register: output
+
+- name: Displaying pushed configuration
+  debug:
+     var: output

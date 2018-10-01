@@ -1,0 +1,46 @@
+---
+- name: BGP Config Gen.
+  hosts: localhost
+  gather_facts: false
+  
+  
+  vars:
+  
+    BGP_ASN: 200
+    BGP_ID: 155.0.0.1
+    BGP_NBR: 60.0.1.2
+
+
+  tasks: 
+
+  -  name: Generating Configuration 
+     template:
+      src: ./templates/bgp_default.j2
+      dest: ./config/new_config.txt
+      
+      
+      
+      
+- name: Applying BGP Configuation
+  hosts: R1
+  gather_facts: false
+  connection: local
+  
+  
+  vars:
+  
+   r1:
+      username: admin
+      password: admin
+
+
+  tasks: 
+
+  -  name: Applying BGP Configuation on R1
+     ios_config:
+      save: y
+      src:
+       ./config/new_config.txt
+      provider:  "{{ r1 }}"
+      
+      

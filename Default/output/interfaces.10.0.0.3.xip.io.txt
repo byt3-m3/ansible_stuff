@@ -1,0 +1,5 @@
+Ethernet0/0                60.0.3.1        YES NVRAM  up                    up      
+Ethernet0/1                10.0.0.3        YES manual up                    up      
+Serial2/0                  155.0.13.2      YES NVRAM  up                    up      
+Loopback0                  155.0.0.3       YES NVRAM  up                    up      
+Tunnel0                    155.1.0.3       YES NVRAM  up                    up

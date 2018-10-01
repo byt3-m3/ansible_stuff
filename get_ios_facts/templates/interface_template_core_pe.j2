@@ -1,0 +1,6 @@
+interface {{ PE_DOWNLINK_1 }}
+ description Link to {{ PE_DOWNLINK_1_PEER }}
+ ip address {{ PE_DOWNLINK_1_IP }} {{ PE_DOWNLINK_1_MASK }}
+ ip ospf 1 area 0
+ ip ospf network point-to-point
+ no shut

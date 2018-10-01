@@ -1,0 +1,9 @@
+router bgp {{  BGP_ASN }}
+ !
+ bgp log-neighbor-changes
+ neighbor {{ BGP_PEER }} inherit peer-session {{ PEER_SESSION_NAME }}
+ !
+ address-family vpnv4
+  neighbor {{ BGP_PEER }}  activate
+  neighbor {{ BGP_PEER }}  send-community extended
+  neighbor {{ BGP_PEER }}  inherit peer-policy {{ PEER_SESSION_NAME }}

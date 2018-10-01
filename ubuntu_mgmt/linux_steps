@@ -1,0 +1,26 @@
+Installing Plex
+
+1.Download the file
+
+wget https://downloads.plex.tv/plex-media-server/1.5.5.3634-995f1dead/plexmediaserver_1.5.5.3634-995f1dead_amd64.deb
+
+2. depackage the file
+
+sudo dpkg -i plexmediaserver*.deb
+
+3. configure plex as service
+
+sudo systemctl enable plexmediaserver.service
+sudo systemctl start plexmediaserver.service
+
+==========================
+Mounting NFS
+
+1. Install NFS client
+
+sudo apt-get install nfs-common
+
+2. Mount NFS
+
+sudo mount 10.0.140.6:/Movies /mnt/movies
+sudo mount 10.0.140.6:/Videos/TV Shows /mnt/tv shows

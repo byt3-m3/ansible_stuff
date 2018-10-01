@@ -1,0 +1,28 @@
+---
+- name: show version
+  hosts: "ios-devices"
+  gather_facts: false
+  connection: local
+  
+
+  vars:
+    cli:
+      host: "{{ inventory_hostname}}"
+      username: admin
+      password: admin
+      transport: cli
+
+  tasks:
+     - name: show version
+       ios_command:
+        commands: show ip int br
+        provider: "{{ cli }}"
+
+       register: output
+     
+     - name: show output
+       debug:
+         var: output.stdout_lines
+
+     - name: copy output to file
+       copy: content="{{ output.stdout_lines }}" dest=./output/{{ inventory_hostname }}.txt

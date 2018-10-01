@@ -1,0 +1,5 @@
+router bgp 200
+ bgp router-id 155.0.0.1
+ bgp log-neighbor-changes
+ neighbor 60.0.1.2 remote-as 100
+ neighbor 60.0.1.2 soft-reconfiguration inbound

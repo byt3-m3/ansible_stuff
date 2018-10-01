@@ -1,0 +1,20 @@
+---
+- name: Generate BGP Config for hosts
+  hosts: "PLEXSERVERS"
+  gather_facts: false
+  connection: local
+
+
+  task:
+
+    - name: Installing NFS client software
+      shell: sudo apt-get install nfs-common -y
+
+    - name: Mounting TV Show Share
+      shell: sudo mount 10.0.140.6:/Videos/TV Shows /mnt/tv shows
+
+    - name: Mounting Movie  Share
+      shell: sudo mount 10.0.140.6:/Movies /mnt/movies
+
+    - name: Adding Share to /etc/fstab for automatic mounting 
+      shell: sudo mount 10.0.140.6:/Movies /mnt/movies

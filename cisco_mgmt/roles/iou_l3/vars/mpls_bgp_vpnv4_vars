@@ -1,0 +1,7 @@
+---
+#Default VPNv4 BGP peer variables
+
+BGP_ASN: 200
+BGP_PEER: 1.1.1.1
+PEER_SESSION_NAME:
+PEER_POLICY_NAME:

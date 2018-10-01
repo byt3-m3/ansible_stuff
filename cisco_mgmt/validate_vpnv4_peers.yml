@@ -1,0 +1,24 @@
+---
+- name: Generate BGP Config for hosts
+  hosts: "PE_ROUTERS"
+  gather_facts: false
+  connection: local
+
+  vars:
+
+    CLI:
+      username: cisco
+      password: cisco
+
+  tasks:
+
+    - name: Validating BGP peerings
+      ios_command:
+       commands: show bgp vpnv4 unicast all summary
+       provider: "{{ CLI }}"
+      register: peer_results
+
+
+    - name: Displaying BGP peerings
+      debug:
+       var: peer_results.stdout_lines

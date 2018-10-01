@@ -1,0 +1,25 @@
+---
+- name: Generate BGP Config for hosts
+  hosts: "PE_ROUTERS"
+  gather_facts: false
+  connection: local
+
+
+  vars:
+
+    CLI:
+      username: cisco
+      password: cisco
+
+  tasks:
+
+    - name: Pusihng VRF configuration
+      ios_config:
+       src: ./templates/base_mpls_vrf.j2
+       provider: "{{ CLI }}"
+
+    - name: Redistribute VRF interfaces to MPLS-VPN
+      ios_config:
+       src: ./templates/mpls_bgp_vrf_add.j2
+       provider: "{{ CLI }}"
+       parents: router bgp "{{ BGP_ASN }}"

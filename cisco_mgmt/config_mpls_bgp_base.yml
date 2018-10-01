@@ -1,0 +1,51 @@
+---
+- name: Generate BGP Config for hosts
+  hosts: "PE_ROUTERS"
+  gather_facts: false
+  connection: local
+
+
+  vars:
+
+    CLI:
+      username: cisco
+      password: cisco
+
+  tasks:
+
+    - name: Pusihng BGP base configuration
+      ios_config:
+       src: ./templates/mpls_ibgp_base.j2
+       provider: "{{ CLI }}"
+       parents: router bgp "{{ BGP_ASN }}"
+
+
+    - name: Pusihng BGP peer Configuration
+      ios_config:
+       src: ./templates/mpls_ibgp_peer
+       provider: "{{ CLI }}"
+       parents: router bgp "{{ BGP_ASN }}"
+
+
+    - name: Displaying BGP running-config
+      ios_command:
+       commands: show run | sec router bgp
+       provider: "{{ CLI }}"
+      register: run_results
+
+
+    - name: Displaying BGP peerings
+      debug:
+       var: run_results.stdout_lines
+
+
+    - name: Validating BGP peerings
+      ios_command:
+       commands: show bgp vpnv4 unicast all summary
+       provider: "{{ CLI }}"
+      register: peer_results
+
+
+    - name: Displaying BGP peerings
+      debug:
+       var: peer_results.stdout_lines

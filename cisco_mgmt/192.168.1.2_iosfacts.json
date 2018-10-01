@@ -1,0 +1,911 @@
+{
+    "ansible_facts": {
+        "ansible_net_all_ipv4_addresses": [
+            "10.0.150.250", 
+            "10.0.110.250", 
+            "10.0.140.1", 
+            "10.0.100.62", 
+            "10.0.100.33", 
+            "10.0.100.17", 
+            "10.0.100.1", 
+            "10.1.0.254", 
+            "192.168.2.1", 
+            "172.16.0.251", 
+            "172.16.1.251", 
+            "192.168.1.2"
+        ], 
+        "ansible_net_all_ipv6_addresses": [], 
+        "ansible_net_config": "Building configuration...\n\nCurrent configuration : 10298 bytes\n!\n! Last configuration change at 23:10:01 KWT Wed Sep 20 2017 by cisco\n! NVRAM config last updated at 18:01:01 KWT Thu Sep 21 2017 by cbaxter\n!\nversion 12.2\nno service pad\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\nno service password-encryption\n!\nhostname BITS-CORE-SW1\n!\nboot-start-marker\nboot-end-marker\n!\nenable secret 5 $1$PAa8$3hNT76/71eT8Kivi4TVd1.\n!\nusername cisco privilege 15 secret 5 $1$lFZq$qJ95pQKPKhkc.w/UvQ55L1\nusername cbaxter privilege 15 secret 5 $1$V.5M$NseyDbRyCCm2BnsmHLx0k.\n!\n!\naaa new-model\n!\n!\naaa group server tacacs+ BITS_ACS\n server-private 10.0.100.25 key bits1234\n ip tacacs source-interface Vlan3100\n!\naaa authentication login VTY local\naaa authorization exec VTY local \naaa accounting commands 15 VTY start-stop group BITS_ACS\n!\n!\n!\naaa session-id common\nclock timezone KWT 3\nswitch 1 provision ws-c3750-48ts\nsystem mtu routing 1500\nvtp mode transparent\nauthentication mac-move permit\nip routing\nip domain-name bits.local\nip name-server 10.0.100.18\nip name-server 8.8.8.8\n!\n!\nip vrf INET2\n rd 65000:1\n!\n!\n!\ncrypto pki trustpoint TP-self-signed-2885367936\n enrollment selfsigned\n subject-name cn=IOS-Self-Signed-Certificate-2885367936\n revocation-check none\n rsakeypair TP-self-signed-2885367936\n!\n!\ncrypto pki certificate chain TP-self-signed-2885367936\n certificate self-signed 01\n  30820250 308201B9 A0030201 02020101 300D0609 2A864886 F70D0101 04050030 \n  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 \n  69666963 6174652D 32383835 33363739 3336301E 170D3933 30333031 30303031 \n  33365A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649 \n  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D32 38383533 \n  36373933 3630819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281 \n  8100E8CC 609B456A 2E699580 AD46BD1C AD385098 DD69F426 3955A6A4 9C4099C3 \n  0C085504 5F6C84CD 46848A42 0ED1DAE1 A6AA6E10 062B4C84 821138F1 6F82337F \n  75452214 C56E4FD0 C0E16A53 5C390647 8C8F5AC1 8597AE5A ECFEFD32 6E22B231 \n  97729D34 3664DE46 0C849619 D26862AF 62A5439F B1DFDAAD 497EFACB ED8C88A6 \n  B2190203 010001A3 78307630 0F060355 1D130101 FF040530 030101FF 30230603 \n  551D1104 1C301A82 18424954 532D434F 52452D53 57312E62 6974732E 6C6F6361 \n  6C301F06 03551D23 04183016 8014E3B0 D345CFDF 7EA77FF7 7B36CE61 ABB087F7 \n  2326301D 0603551D 0E041604 14E3B0D3 45CFDF7E A77FF77B 36CE61AB B087F723 \n  26300D06 092A8648 86F70D01 01040500 03818100 43D60BD5 7411F4FF CFD84575 \n  816ECC47 F4934429 68F8BC1D F518325E D4292942 44835D89 12C83336 90DF640E \n  BE09A0AC 21213579 45DC22F9 2630FB93 53942020 B073373F DAD793D6 51D7F42C \n  A9C33C3C 544EC75A 04026D3A A1B3FFE0 652E1E7A 189447DF 8B665243 B55F3AAA \n  D339AB55 54EDCB7C 64081EA0 C63E1E5C 5A368A2A\n  quit\n!\n!\n!\nport-channel load-balance src-dst-ip\narchive\n log config\n  logging enable\n  notify syslog contenttype plaintext\n!\nspanning-tree mode rapid-pvst\nspanning-tree portfast default\nspanning-tree extend system-id\nspanning-tree vlan 1-98,100-4094 priority 24576\nspanning-tree vlan 99 priority 20480\n!\nvlan internal allocation policy ascending\n!\nvlan 17,21,31 \n!\nvlan 50\n name INET_SECONDARY\n!\nvlan 51\n name INET_PRIMARY\n!\nvlan 98\n name INET_2\n!\nvlan 99\n name OUTSIDE\n!\nvlan 111,666 \n!\nvlan 999\n name OUTSIDE_B\n!\nvlan 3100\n name ESXI_MGMT\n!\nvlan 3101\n name VL3101_SRVMGMT\n!\nvlan 3102\n name VL3102_WKSTNMGMT\n!\nvlan 3103\n name VL3103_FWMGMT\n!\nvlan 3104\n name VL3104_RTRMGMT\n!\nvlan 3105\n name VL3105_OUTSIDE\n!\nvlan 3110\n name ESXI_vMotion\n!\nvlan 3120\n name NX_CONTROL\n!\nvlan 3130\n name NX_PACKET\n!\nvlan 3140\n name VL3140_MEDIANET\n!\nvlan 3150\n name VL3150_DHCP\n!\nvlan 3151 \n!\nvlan 3170\n name VL3170_WKSTNS\n!\nip ftp username cbaxter\nip ftp password ********\nip ssh source-interface Vlan3100\n!\npolicy-map SHAPE_OUT\n class class-default\n!\n!\n!\n!\ninterface Port-channel1\n description LACP to ESXi1\n switchport trunk encapsulation dot1q\n switchport mode trunk\n!\ninterface Port-channel2\n description LACP to ESXi2\n switchport trunk encapsulation dot1q\n switchport mode trunk\n!\ninterface Port-channel3\n description LACP to ESXi3\n switchport trunk encapsulation dot1q\n switchport mode trunk\n!\ninterface Port-channel4\n description PO to BITS-CORE-SW2\n switchport trunk encapsulation dot1q\n switchport trunk native vlan 99\n switchport mode trunk\n!\ninterface FastEthernet1/0/1\n description LINK TO NAS1\n switchport access vlan 3140\n switchport trunk encapsulation dot1q\n switchport mode access\n speed 100\n spanning-tree portfast\n!\ninterface FastEthernet1/0/2\n switchport access vlan 3140\n switchport trunk encapsulation dot1q\n switchport mode access\n speed 100\n duplex full\n spanning-tree portfast trunk\n!\ninterface FastEthernet1/0/3\n switchport access vlan 99\n switchport trunk encapsulation dot1q\n switchport mode trunk\n speed 100\n duplex full\n spanning-tree portfast trunk\n!\ninterface FastEthernet1/0/4\n switchport access vlan 99\n switchport trunk encapsulation dot1q\n switchport mode trunk\n speed 100\n duplex full\n spanning-tree portfast trunk\n!\ninterface FastEthernet1/0/5\n switchport access vlan 99\n switchport trunk encapsulation dot1q\n switchport mode trunk\n speed 100\n duplex full\n spanning-tree portfast trunk\n!\ninterface FastEthernet1/0/6\n switchport access vlan 99\n switchport trunk encapsulation dot1q\n switchport mode trunk\n speed 100\n duplex full\n spanning-tree portfast trunk\n!\ninterface FastEthernet1/0/7\n switchport access vlan 99\n switchport trunk encapsulation dot1q\n switchport trunk native vlan 99\n switchport mode access\n spanning-tree portfast trunk\n!\ninterface FastEthernet1/0/8\n switchport access vlan 3140\n switchport mode access\n spanning-tree portfast trunk\n!\ninterface FastEthernet1/0/9\n!\ninterface FastEthernet1/0/10\n switchport access vlan 99\n switchport mode access\n!\ninterface FastEthernet1/0/11\n!\ninterface FastEthernet1/0/12\n!\ninterface FastEthernet1/0/13\n!\ninterface FastEthernet1/0/14\n!\ninterface FastEthernet1/0/15\n!\ninterface FastEthernet1/0/16\n!\ninterface FastEthernet1/0/17\n description LINK TO ESXI1 VMNIC0\n switchport trunk encapsulation dot1q\n switchport mode trunk\n speed 100\n duplex full\n channel-protocol lacp\n!\ninterface FastEthernet1/0/18\n description LINK TO ESXI1 VMNIC1\n switchport trunk encapsulation dot1q\n switchport mode trunk\n speed 100\n duplex full\n channel-protocol lacp\n!\ninterface FastEthernet1/0/19\n description LINK TO ESXI2 VMNIC0\n switchport trunk encapsulation dot1q\n switchport mode trunk\n speed 100\n duplex full\n channel-protocol lacp\n channel-group 2 mode active\n!\ninterface FastEthernet1/0/20\n description LINK TO ESXI2 VMNIC1\n switchport trunk encapsulation dot1q\n switchport mode trunk\n speed 100\n duplex full\n channel-protocol lacp\n!\ninterface FastEthernet1/0/21\n description LINK TO ESXI3 VMNIC0\n switchport trunk encapsulation dot1q\n switchport mode trunk\n speed 100\n duplex full\n channel-protocol lacp\n channel-group 3 mode active\n!\ninterface FastEthernet1/0/22\n description LINK TO ESXI3 VMNIC1\n switchport trunk encapsulation dot1q\n switchport mode trunk\n speed 100\n channel-protocol lacp\n!\ninterface FastEthernet1/0/23\n description LINK TO CORE_ASA\n switchport trunk encapsulation dot1q\n switchport mode trunk\n spanning-tree portfast trunk\n!\ninterface FastEthernet1/0/24\n!\ninterface FastEthernet1/0/25\n!\ninterface FastEthernet1/0/26\n!\ninterface FastEthernet1/0/27\n!\ninterface FastEthernet1/0/28\n!\ninterface FastEthernet1/0/29\n!\ninterface FastEthernet1/0/30\n!\ninterface FastEthernet1/0/31\n!\ninterface FastEthernet1/0/32\n!\ninterface FastEthernet1/0/33\n switchport trunk encapsulation dot1q\n switchport trunk native vlan 99\n switchport mode trunk\n!\ninterface FastEthernet1/0/34\n!\ninterface FastEthernet1/0/35\n!\ninterface FastEthernet1/0/36\n!\ninterface FastEthernet1/0/37\n!\ninterface FastEthernet1/0/38\n!\ninterface FastEthernet1/0/39\n!\ninterface FastEthernet1/0/40\n!\ninterface FastEthernet1/0/41\n!\ninterface FastEthernet1/0/42\n!\ninterface FastEthernet1/0/43\n!\ninterface FastEthernet1/0/44\n description LINK TO DLINK\n switchport access vlan 50\n switchport mode access\n!\ninterface FastEthernet1/0/45\n description LINK TO TVS-682-1.52\n switchport access vlan 99\n switchport trunk encapsulation dot1q\n switchport trunk native vlan 99\n switchport mode access\n spanning-tree portfast\n!\ninterface FastEthernet1/0/46\n switchport access vlan 99\n switchport mode access\n!\ninterface FastEthernet1/0/47\n description LINK TO BITS-CORE-SW3\n switchport trunk encapsulation dot1q\n switchport mode trunk\n switchport nonegotiate\n!\ninterface FastEthernet1/0/48\n description TRUNK TO BITS-CORE-SW2\n switchport trunk encapsulation dot1q\n switchport trunk native vlan 99\n switchport mode trunk\n switchport nonegotiate\n!\ninterface GigabitEthernet1/0/1\n!\ninterface GigabitEthernet1/0/2\n!\ninterface GigabitEthernet1/0/3\n!\ninterface GigabitEthernet1/0/4\n!\ninterface Vlan1\n no ip address\n!\ninterface Vlan50\n ip address 172.16.0.251 255.255.255.0\n!\ninterface Vlan51\n ip address 172.16.1.251 255.255.255.0\n!\ninterface Vlan99\n ip address 192.168.1.2 255.255.255.0\n ip helper-address 192.168.1.1\n ip tcp adjust-mss 1460\n!\ninterface Vlan999\n ip address 192.168.2.1 255.255.255.0\n ip helper-address 10.0.100.18\n ip tcp adjust-mss 1460\n!\ninterface Vlan3100\n ip address 10.0.100.1 255.255.255.240\n ip helper-address 10.0.100.18\n!\ninterface Vlan3101\n ip address 10.0.100.17 255.255.255.240\n ip helper-address 10.0.100.18\n!\ninterface Vlan3102\n ip address 10.0.100.33 255.255.255.240\n!\ninterface Vlan3103\n ip address 10.0.100.62 255.255.255.240\n!\ninterface Vlan3104\n ip address 10.2.0.254 255.255.255.0 secondary\n ip address 10.1.0.254 255.255.255.0\n!\ninterface Vlan3110\n ip address 10.0.110.250 255.255.255.0\n!\ninterface Vlan3140\n ip address 10.0.140.1 255.255.255.0\n!\ninterface Vlan3150\n ip address 10.0.150.250 255.255.255.0\n ip helper-address 10.0.100.18\n!\nip classless\nip forward-protocol udp bootpc\nip forward-protocol udp bootps\nip route 0.0.0.0 0.0.0.0 192.168.1.1\nip http server\nip http secure-server\n!\n!\nip sla enable reaction-alerts\nlogging origin-id hostname\nlogging source-interface Vlan3100\nlogging 10.0.100.6\n!\nsnmp-server community bits_rw RW\n!\n!\nline con 0\n logging synchronous\nline vty 0 4\n exec-timeout 60 0\n authorization exec VTY\n accounting commands 15 VTY\n login authentication VTY\n transport input all\nline vty 5 15\n exec-timeout 60 0\n!\nntp clock-period 36029063\nntp server 192.168.1.1 source Vlan99\nend", 
+        "ansible_net_filesystems": [
+            "flash:"
+        ], 
+        "ansible_net_gather_subset": [
+            "hardware", 
+            "default", 
+            "interfaces", 
+            "config"
+        ], 
+        "ansible_net_hostname": "BITS-CORE-SW1", 
+        "ansible_net_image": "flash:/c3750-ipservicesk9-mz.122-55.SE10.bin", 
+        "ansible_net_interfaces": {
+            "FastEthernet1/0/1": {
+                "bandwidth": 100000, 
+                "description": "LINK TO NAS1", 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.3883", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/10": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.388c", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/11": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.388d", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/12": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.388e", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/13": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.388f", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/14": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.3890", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/15": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.3891", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/16": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.3892", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/17": {
+                "bandwidth": 100000, 
+                "description": "LINK TO ESXI1 VMNIC0", 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "up (connected) ", 
+                "macaddress": "0023.abfb.3893", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "up", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/18": {
+                "bandwidth": 100000, 
+                "description": "LINK TO ESXI1 VMNIC1", 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.3894", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/19": {
+                "bandwidth": 100000, 
+                "description": "LINK TO ESXI2 VMNIC0", 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.3895", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/2": {
+                "bandwidth": 100000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.3884", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/20": {
+                "bandwidth": 100000, 
+                "description": "LINK TO ESXI2 VMNIC1", 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.3896", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/21": {
+                "bandwidth": 100000, 
+                "description": "LINK TO ESXI3 VMNIC0", 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "up (connected) ", 
+                "macaddress": "0023.abfb.3897", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "up", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/22": {
+                "bandwidth": 100000, 
+                "description": "LINK TO ESXI3 VMNIC1", 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.3898", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/23": {
+                "bandwidth": 10000, 
+                "description": "LINK TO CORE_ASA", 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.3899", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/24": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.389a", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/25": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.389d", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/26": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.389e", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/27": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.389f", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/28": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.38a0", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/29": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.38a1", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/3": {
+                "bandwidth": 100000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.3885", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/30": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.38a2", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/31": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.38a3", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/32": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.38a4", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/33": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.38a5", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/34": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.38a6", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/35": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.38a7", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/36": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.38a8", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/37": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.38a9", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/38": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.38aa", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/39": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.38ab", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/4": {
+                "bandwidth": 100000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.3886", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/40": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.38ac", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/41": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.38ad", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/42": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.38ae", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/43": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.38af", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/44": {
+                "bandwidth": 100000, 
+                "description": "LINK TO DLINK", 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.38b0", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/45": {
+                "bandwidth": 100000, 
+                "description": "LINK TO TVS-682-1.52", 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "up (connected) ", 
+                "macaddress": "0023.abfb.38b1", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "up", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/46": {
+                "bandwidth": 100000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.38b2", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/47": {
+                "bandwidth": 100000, 
+                "description": "LINK TO BITS-CORE-SW3", 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "up (connected) ", 
+                "macaddress": "0023.abfb.38b3", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "up", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/48": {
+                "bandwidth": 100000, 
+                "description": "TRUNK TO BITS-CORE-SW2", 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "up (connected) ", 
+                "macaddress": "0023.abfb.38b4", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "up", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/5": {
+                "bandwidth": 100000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.3887", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/6": {
+                "bandwidth": 100000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.3888", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/7": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.3889", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/8": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.388a", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "FastEthernet1/0/9": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.388b", 
+                "mediatype": "10/100BaseTX", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Fast Ethernet"
+            }, 
+            "GigabitEthernet1/0/1": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.3881", 
+                "mediatype": "Not Present", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Gigabit Ethernet"
+            }, 
+            "GigabitEthernet1/0/2": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.3882", 
+                "mediatype": "Not Present", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Gigabit Ethernet"
+            }, 
+            "GigabitEthernet1/0/3": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.389b", 
+                "mediatype": "Not Present", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Gigabit Ethernet"
+            }, 
+            "GigabitEthernet1/0/4": {
+                "bandwidth": 10000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.389c", 
+                "mediatype": "Not Present", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "Gigabit Ethernet"
+            }, 
+            "Port-channel1": {
+                "bandwidth": 10000, 
+                "description": "LACP to ESXi1", 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0000.0000.0000", 
+                "mediatype": "unknown", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "EtherChannel"
+            }, 
+            "Port-channel2": {
+                "bandwidth": 10000, 
+                "description": "LACP to ESXi2", 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0000.0000.0000", 
+                "mediatype": "unknown", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "EtherChannel"
+            }, 
+            "Port-channel3": {
+                "bandwidth": 10000, 
+                "description": "LACP to ESXi3", 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0000.0000.0000", 
+                "mediatype": "unknown", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "EtherChannel"
+            }, 
+            "Port-channel4": {
+                "bandwidth": 100000, 
+                "description": "PO to BITS-CORE-SW2", 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "down (notconnect) ", 
+                "macaddress": "0023.abfb.38b4", 
+                "mediatype": "unknown", 
+                "mtu": 1500, 
+                "operstatus": "down", 
+                "type": "EtherChannel"
+            }, 
+            "Vlan1": {
+                "bandwidth": 1000000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": null, 
+                "lineprotocol": "up ", 
+                "macaddress": "0023.abfb.38c0", 
+                "mediatype": null, 
+                "mtu": 1500, 
+                "operstatus": "up", 
+                "type": "EtherSVI"
+            }, 
+            "Vlan3100": {
+                "bandwidth": 1000000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": {
+                    "address": "10.0.100.1", 
+                    "masklen": 28
+                }, 
+                "lineprotocol": "up ", 
+                "macaddress": "0023.abfb.38c1", 
+                "mediatype": null, 
+                "mtu": 1500, 
+                "operstatus": "up", 
+                "type": "EtherSVI"
+            }, 
+            "Vlan3101": {
+                "bandwidth": 1000000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": {
+                    "address": "10.0.100.17", 
+                    "masklen": 28
+                }, 
+                "lineprotocol": "up ", 
+                "macaddress": "0023.abfb.38c4", 
+                "mediatype": null, 
+                "mtu": 1500, 
+                "operstatus": "up", 
+                "type": "EtherSVI"
+            }, 
+            "Vlan3102": {
+                "bandwidth": 1000000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": {
+                    "address": "10.0.100.33", 
+                    "masklen": 28
+                }, 
+                "lineprotocol": "up ", 
+                "macaddress": "0023.abfb.38c5", 
+                "mediatype": null, 
+                "mtu": 1500, 
+                "operstatus": "up", 
+                "type": "EtherSVI"
+            }, 
+            "Vlan3103": {
+                "bandwidth": 1000000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": {
+                    "address": "10.0.100.62", 
+                    "masklen": 28
+                }, 
+                "lineprotocol": "up ", 
+                "macaddress": "0023.abfb.38c6", 
+                "mediatype": null, 
+                "mtu": 1500, 
+                "operstatus": "up", 
+                "type": "EtherSVI"
+            }, 
+            "Vlan3104": {
+                "bandwidth": 1000000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": {
+                    "address": "10.1.0.254", 
+                    "masklen": 24
+                }, 
+                "lineprotocol": "up ", 
+                "macaddress": "0023.abfb.38c7", 
+                "mediatype": null, 
+                "mtu": 1500, 
+                "operstatus": "up", 
+                "type": "EtherSVI"
+            }, 
+            "Vlan3110": {
+                "bandwidth": 1000000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": {
+                    "address": "10.0.110.250", 
+                    "masklen": 24
+                }, 
+                "lineprotocol": "up ", 
+                "macaddress": "0023.abfb.38c8", 
+                "mediatype": null, 
+                "mtu": 1500, 
+                "operstatus": "up", 
+                "type": "EtherSVI"
+            }, 
+            "Vlan3140": {
+                "bandwidth": 1000000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": {
+                    "address": "10.0.140.1", 
+                    "masklen": 24
+                }, 
+                "lineprotocol": "up ", 
+                "macaddress": "0023.abfb.38c9", 
+                "mediatype": null, 
+                "mtu": 1500, 
+                "operstatus": "up", 
+                "type": "EtherSVI"
+            }, 
+            "Vlan3150": {
+                "bandwidth": 1000000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": {
+                    "address": "10.0.150.250", 
+                    "masklen": 24
+                }, 
+                "lineprotocol": "up ", 
+                "macaddress": "0023.abfb.38ca", 
+                "mediatype": null, 
+                "mtu": 1500, 
+                "operstatus": "up", 
+                "type": "EtherSVI"
+            }, 
+            "Vlan50": {
+                "bandwidth": 1000000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": {
+                    "address": "172.16.0.251", 
+                    "masklen": 24
+                }, 
+                "lineprotocol": "up ", 
+                "macaddress": "0023.abfb.38cb", 
+                "mediatype": null, 
+                "mtu": 1500, 
+                "operstatus": "up", 
+                "type": "EtherSVI"
+            }, 
+            "Vlan51": {
+                "bandwidth": 1000000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": {
+                    "address": "172.16.1.251", 
+                    "masklen": 24
+                }, 
+                "lineprotocol": "up ", 
+                "macaddress": "0023.abfb.38cc", 
+                "mediatype": null, 
+                "mtu": 1500, 
+                "operstatus": "up", 
+                "type": "EtherSVI"
+            }, 
+            "Vlan99": {
+                "bandwidth": 1000000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": {
+                    "address": "192.168.1.2", 
+                    "masklen": 24
+                }, 
+                "lineprotocol": "up ", 
+                "macaddress": "0023.abfb.38c2", 
+                "mediatype": null, 
+                "mtu": 1500, 
+                "operstatus": "up", 
+                "type": "EtherSVI"
+            }, 
+            "Vlan999": {
+                "bandwidth": 1000000, 
+                "description": null, 
+                "duplex": null, 
+                "ipv4": {
+                    "address": "192.168.2.1", 
+                    "masklen": 24
+                }, 
+                "lineprotocol": "up ", 
+                "macaddress": "0023.abfb.38c3", 
+                "mediatype": null, 
+                "mtu": 1500, 
+                "operstatus": "up", 
+                "type": "EtherSVI"
+            }
+        }, 
+        "ansible_net_memfree_mb": 30684, 
+        "ansible_net_memtotal_mb": 66561, 
+        "ansible_net_model": null, 
+        "ansible_net_neighbors": {
+            "null": [
+                {
+                    "host": null, 
+                    "port": null
+                }
+            ]
+        }, 
+        "ansible_net_serialnum": "FDO1242Y0DB", 
+        "ansible_net_version": "12.2(55)SE10"
+    }, 
+    "changed": false
+}

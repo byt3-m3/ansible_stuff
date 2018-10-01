@@ -1,0 +1,7 @@
+---
+- name: Used for testing roles
+  hosts: "TEST_ROUTER"
+  gather_facts: false
+  connection: local
+  roles:
+    - bgp_base

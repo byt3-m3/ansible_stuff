@@ -1,0 +1,5 @@
+router bgp {{  BGP_ASN }}
+ template peer-policy {{ PEER_POLICY_NAME }}
+ route-map {{ ROUTEMAP_NAME }}
+ send-community both
+ exit-peer-policy

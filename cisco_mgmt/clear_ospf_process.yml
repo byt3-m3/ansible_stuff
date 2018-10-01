@@ -1,0 +1,19 @@
+---
+- name: Clearing OSPF Process
+  hosts: "CORE_ROUTERS"
+  gather_facts: false
+  connection: local
+
+  vars:
+       cli:
+        username: cisco
+        password: cisco
+
+
+  tasks:
+    - name: Clearin OSPF process on lab devices
+      ios_command:
+        commands: 
+          - clear ip ospf process  
+        provider: "{{ cli }}"
+      register: ROUTE_MAP

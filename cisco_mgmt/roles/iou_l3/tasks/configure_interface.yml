@@ -1,0 +1,9 @@
+- name: Pushing Interface configuration to devices
+  ios_config:
+    src: ./templates/interface_template.j2
+    provider: "{{ cli }}"
+  register: output
+
+- name: Displaying pushed configuration
+  debug:
+     var: output

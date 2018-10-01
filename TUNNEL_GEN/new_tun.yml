@@ -1,0 +1,171 @@
+---
+- name: DMVPN Hub Config  #Play to Configure DMVPN HUB
+  hosts: "R1"
+  gather_facts: false
+  connection: local
+  
+  
+  vars:
+  
+   r1:
+      username: admin
+      password: admin
+      
+  tasks:
+     
+   - name: configuring tunnel 0 on R1
+     ios_config:
+      provider: "{{ r1 }}"
+      lines:
+       -  interface tun 0
+       -  ip address 155.1.0.1 255.255.255.0
+       -  no ip redirects
+       -  ip mtu 1440
+       -  ip nhrp authentication cisco123
+       -  ip nhrp map multicast dynamic
+       -  ip nhrp network-id 1
+       -  ip nhrp shortcut
+       -  ip nhrp redirect
+       -  ip ospf network point-to-multipoint
+       -  ip ospf 1 area 0
+       -  tunnel source Ethernet0/0
+       -  tunnel mode gre multipoint
+       -  tunnel key 0
+       
+       
+      
+- name: DMVPN  SpokeA Config
+  hosts: "R2"
+  gather_facts: false
+  connection: local
+
+  vars:
+   r2:
+      username: admin
+      password: admin
+      
+  tasks:
+     
+   - name: configuring tunnel 0 on R2
+     ios_config:
+      provider: "{{ r2 }}"
+      lines:
+       -  interface Tunnel 0
+       -  ip address 155.1.0.2 255.255.255.0
+       -  no ip redirects
+       -  ip mtu 1440
+       -  ip nhrp authentication cisco123
+       -  ip nhrp map multicast dynamic
+       -  ip nhrp map 155.1.0.1 60.0.1.1
+       -  ip nhrp map multicast 60.0.1.1
+       -  ip nhrp network-id 1
+       -  ip nhrp nhs 155.1.0.1
+       -  ip nhrp shortcut
+       -  ip nhrp redirect
+       -  ip ospf network point-to-multipoint
+       -  ip ospf 1 area 0
+       -  tunnel source Ethernet0/0
+       -  tunnel mode gre multipoint
+       -  tunnel key 0
+
+
+
+- name: DMVPN  SpokeB Config
+  hosts: "R3"
+  gather_facts: false
+  connection: local
+
+  vars:
+   r3:
+      username: admin
+      password: admin
+      
+  tasks:
+
+     
+   - name: configuring tunnel 0 on R3
+     ios_config:
+      provider: "{{ r3 }}"
+      lines:
+       -  interface Tunnel 0
+       -  ip address 155.1.0.3 255.255.255.0
+       -  no ip redirects
+       -  ip mtu 1440
+       -  ip nhrp authentication cisco123
+       -  ip nhrp map multicast dynamic
+       -  ip nhrp map 155.1.0.1 60.0.1.1
+       -  ip nhrp map multicast 60.0.1.1
+       -  ip nhrp network-id 1
+       -  ip nhrp nhs 155.1.0.1
+       -  ip nhrp shortcut
+       -  ip nhrp redirect
+       -  ip ospf network point-to-multipoint
+       -  ip ospf 1 area 0
+       -  tunnel source Ethernet0/0
+       -  tunnel mode gre multipoint
+       -  tunnel key 0
+       
+       
+       
+       
+- name: DMVPN  SpokeB Config
+  hosts: "R4"
+  gather_facts: false
+  connection: local
+
+  vars:
+   r4:
+      username: admin
+      password: admin
+      
+  tasks:
+
+     
+   - name: configuring tunnel 0 on R4
+     ios_config:
+      provider: "{{ r4 }}"
+      lines:
+       -  interface Tunnel 0
+       -  ip address 155.1.0.4 255.255.255.0
+       -  no ip redirects
+       -  ip mtu 1440
+       -  ip nhrp authentication cisco123
+       -  ip nhrp map multicast dynamic
+       -  ip nhrp map 155.1.0.1 60.0.1.1
+       -  ip nhrp map multicast 60.0.1.1
+       -  ip nhrp network-id 1
+       -  ip nhrp nhs 155.1.0.1
+       -  ip nhrp shortcut
+       -  ip nhrp redirect
+       -  ip ospf network point-to-multipoint
+       -  ip ospf 1 area 0
+       -  tunnel source Ethernet0/0
+       -  tunnel mode gre multipoint
+       -  tunnel key 0
+       
+       
+       
+       
+       
+- name: DMVPN Verification #Play to Configure DMVPN HUB
+  hosts: "R1:R2:R3:R4"
+  gather_facts: false
+  connection: local
+  
+  vars:
+   cli:
+      username: admin
+      password: admin
+  
+  
+  tasks:
+  
+   - name: Show DMVPN Tunnels
+     ios_command:
+      provider: "{{ cli }}"
+      commands: show run int tun 0 
+     register: SHOW_TUN
+     
+   - name: Displaying Hostname for R2
+     debug:
+       var: SHOW_TUN.stdout_lines

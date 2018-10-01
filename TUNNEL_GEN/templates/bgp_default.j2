@@ -1,0 +1,5 @@
+router bgp {{ BGP_ASN }}
+ bgp router-id {{ BGP_ID }}
+ bgp log-neighbor-changes
+ neighbor {{ BGP_NBR }} remote-as 100
+ neighbor {{ BGP_NBR }} soft-reconfiguration inbound

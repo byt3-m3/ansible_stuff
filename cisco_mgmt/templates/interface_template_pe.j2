@@ -1,0 +1,29 @@
+hostname {{ ROUTERNAME }}
+!
+interface {{ LOOPBACK_0 }}
+ description ROUTER-ID
+ ip address {{ LOOPBACK_0_IP }} 255.255.255.255
+ ip ospf 1 area 0
+!
+!
+interface {{ INTERFACE_1 }}
+ description Link to {{ INTERFACE_1_PEER }}
+ ip address {{ INTERFACE_1_IP }} {{ INTERFACE_1_MASK }}
+ ip ospf 1 area 0
+ ip ospf network point-to-point
+ no shut
+!
+interface {{ INTERFACE_2 }}
+ description Link to {{ INTERFACE_2_PEER }}
+ ip address {{ INTERFACE_2_IP }} {{ INTERFACE_2_MASK }}
+ ip ospf 1 area 0
+ ip ospf network point-to-point
+ no shut
+!
+interface {{ ANSIBLE_CONNECTION }}
+ description Link to Ansible Controller 
+ duplex full
+ no shut
+!
+router ospf 1
+ mpls ldp autoconfig

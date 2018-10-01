@@ -1,0 +1,6 @@
+  vars:
+   cli:
+      host: 10.0.0.1
+      username: admin
+      password: admin
+      transport: cli

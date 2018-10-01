@@ -1,0 +1,4 @@
+-name: config hostaname
+ ios_config:
+  lines:
+    - hostaname "{{ HOSTNAME }}"

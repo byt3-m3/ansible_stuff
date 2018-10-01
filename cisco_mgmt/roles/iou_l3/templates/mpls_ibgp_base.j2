@@ -1,0 +1,10 @@
+router bgp {{ BGP_ASN }}
+ template peer-policy IBGP_PEER_POLICY
+  send-community both
+ exit-peer-policy
+ !
+ template peer-session IBGP_PEER_SESSION
+  remote-as {{ BGP_ASN }}
+  description peer group used for IBGP peers
+  update-source Loopback0
+ exit-peer-session

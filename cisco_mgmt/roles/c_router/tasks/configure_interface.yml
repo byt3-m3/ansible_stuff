@@ -1,0 +1,6 @@
+-name: config interface
+ ios_config:
+  lines:
+    - description LINK TO "{{ PEER }}"
+    - ip address "{{ IP_ADDR }}"
+  parents: interface "{{ INETERFACE }}"

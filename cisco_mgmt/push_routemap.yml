@@ -1,0 +1,22 @@
+---
+- name: Add and Apply Route Map for VPNv4 IBGP peer-template
+  hosts: "PE_ROUTERS"
+  gather_facts: false
+  connection: local
+
+  vars:
+       cli:
+        username: cisco
+        password: cisco
+
+
+  tasks:
+    - name: Configuring and Applying route map to lab devices
+      ios_config:
+        src: ./templates/routemap.j2
+        provider: "{{ cli }}"
+      register: ROUTE_MAP
+
+    - name: Displaying pushed configuration
+      debug:
+         var: ROUTE_MAP

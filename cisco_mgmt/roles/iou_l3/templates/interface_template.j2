@@ -1,0 +1,6 @@
+{%for INTERFACE in LINKS %}
+interface {{ INTERFACE }}
+ description Link to {{ INTERFACE_PEER }}
+ ip address {{ INTERFACE_IP }} {{ INTERFACE_MASK }}
+ no shut
+{%endfor%}

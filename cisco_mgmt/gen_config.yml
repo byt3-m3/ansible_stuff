@@ -1,0 +1,24 @@
+---
+- name: Generate Config
+  hosts: "R1"
+  gather_facts: false
+  connection: local
+  
+  
+  vars:
+  
+   r1:
+      username: cisco
+      password: cisco
+  
+  
+  tasks:
+    - name: Fetching Running Configuration
+      ios_command:
+       provider: "{{ r1 }}"
+       commands: show run 
+      register: RUNNING_CONFIG
+      
+    - name: Running Configuration Results
+      debug:
+       var: RUNNING_CONFIG.stdout_lines

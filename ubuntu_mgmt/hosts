@@ -1,0 +1,15 @@
+[PLEXSERVERS]
+plexubuntu01.bits.local
+
+[GNS3VM]
+gns3vm.bits.local
+
+[PLEXSERVERS:vars]
+ansible_connection=ssh
+ansible_ssh_user=gns3
+ansible_ssh_pass=gns3
+
+
+
+[ANSIBLEVM]
+ansible.bits.local

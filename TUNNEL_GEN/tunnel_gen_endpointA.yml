@@ -1,0 +1,42 @@
+---
+- name: Tunnel Gen Endpoint A
+  hosts: "routera"
+  gather_facts: false
+  connection: local
+  
+  
+  vars:
+   r1:
+      host: "{{ inventory_hostname }}"
+      username: admin
+      password: admin
+      
+      
+      
+  tasks:
+
+   - name: gathering hostnameA
+     ios_command:
+      commands: show run | include hostname
+      provider: "{{ r1 }}"
+     register: hostnameA_out
+     
+   - name: Displaying Hostname
+     debug:
+       var: hostnameA_out.stdout_lines
+     
+   - name: configuring tunnel 100
+     ios_config:
+      lines:
+       - interface tun100
+       - ip address 150.0.0.1 255.255.255.0
+       - tunnel source eth0/0
+       - tunnel destination 60.0.2.1
+       - ip ospf 1 area 0
+       - no shutdown
+      provider: "{{ r1 }}"
+     
+     
+
+
+

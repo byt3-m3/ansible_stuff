@@ -1,0 +1,29 @@
+---
+- name: DMVPN Single Hub Config
+  hosts: "R2"
+  gather_facts: false
+  connection: local
+  
+  
+  vars:
+   r2:
+      username: admin
+      password: admin
+      
+  tasks:
+
+   - name: Gathering hostname for R2
+     ios_command:
+      commands: show run | include hostname
+      provider: "{{ r2 }}"
+     #register: HOSTNAME
+     
+     
+   - name: Generating Template hostname for R2
+     template:
+      src: ./templates/bgp_default.j2
+      dest: ./config/new_config.txt
+     
+   - name: Generating Template hostname for R2
+     shell: cat ./config/new_config.txt
+     

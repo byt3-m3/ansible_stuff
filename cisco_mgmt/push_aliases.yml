@@ -1,0 +1,22 @@
+---
+- name: Configure Default Aliaes config
+  hosts: "ACTIVE_NODES"
+  gather_facts: false
+  connection: local
+
+  vars:
+       cli:
+        username: cisco
+        password: cisco
+
+
+  tasks:
+    - name: Pushing aliases to lab devices
+      ios_config:
+        src: ./templates/aliases.j2
+        provider: "{{ cli }}"
+      register: output
+
+    - name: Displaying pushed configuration
+      debug:
+         var: output

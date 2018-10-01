@@ -1,0 +1,44 @@
+- name: IOS Fact Finder
+  hosts: "all"
+  gather_facts: false
+  connection: local
+
+
+  vars:
+       cli:
+        username: cisco
+        password: cisco
+
+
+  tasks:
+    - name: Gathering IOS Facts
+      ios_facts:
+       gather_subset: all
+       provider: "{{ cli }}"
+
+    - name: Extracting Device hostname
+      debug: var=ansible_net_hostname
+
+    - name: Extracting Interface descriptions
+      debug: var=ansible_net_interfaces[item]['description']
+      with_items:
+        - 'Ethernet0/0'
+        - 'Ethernet0/1'
+        - 'Ethernet0/3'
+
+    - name: Extracting Interface Opperational State
+      debug: var=ansible_net_interfaces[item]['operstatus']
+      with_items:
+        - 'Ethernet0/0'
+        - 'Ethernet0/1'
+        - 'Ethernet0/3'
+
+    - name: Extracting Interface MAC address
+      debug: var=ansible_net_interfaces[item]['macaddress']
+      with_items:
+        - 'Ethernet0/0'
+        - 'Ethernet0/1'
+        - 'Ethernet0/3'
+
+    - name: Disclaimer
+      debug: msg=test

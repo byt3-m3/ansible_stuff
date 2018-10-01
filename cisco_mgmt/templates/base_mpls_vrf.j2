@@ -1,0 +1,10 @@
+vrf definition {{ VRF_NAME }}
+ rd {{ VRF_RD }}
+ route-target export {{ VRF_RT }}
+ route-target import {{ VRF_RT }}
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family

@@ -1,0 +1,5 @@
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+155.0.0.3         0   FULL/  -        00:00:30    155.0.13.2      Serial2/0
+155.0.0.4         0   FULL/  -        00:01:47    155.1.0.4       Tunnel0
+155.0.0.2         0   FULL/  -        00:01:31    155.1.0.2       Tunnel0
+155.0.0.3         0   FULL/  -        00:01:35    155.1.0.3       Tunnel0

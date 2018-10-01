@@ -1,0 +1,13 @@
+---
+- name: test
+  hosts: "GNS3VM"
+  connection: ssh
+
+
+  tasks:
+  - name: SNMP TEST
+    shell: ifconfig
+    register: interface_out
+
+  - name: Display results
+    debug: var=interface_out.stdout_lines

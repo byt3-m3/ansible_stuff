@@ -1,0 +1,260 @@
+{
+    "ansible_net_all_ipv4_addresses": [
+        "10.0.0.1", 
+        "10.0.13.1", 
+        "10.0.12.1", 
+        "10.0.15.1", 
+        "10.0.14.1", 
+        "155.0.0.1"
+    ], 
+    "ansible_net_all_ipv6_addresses": [], 
+    "ansible_net_config": "Building configuration...\n\nCurrent configuration : 2529 bytes\n!\n! Last configuration change at 19:45:10 UTC Thu Sep 21 2017\nversion 15.2\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\nno service password-encryption\n!\nhostname CORE-R1\n!\nboot-start-marker\nboot-end-marker\n!\n!\nvrf definition MGMT\n !\n address-family ipv4\n exit-address-family\n!\n!\nno aaa new-model\nmmi polling-interval 60\nno mmi auto-configure\nno mmi pvc\nmmi snmp-timeout 180\nno ip icmp rate-limit unreachable\n!\n!\n!\n!\n!\n!\nno ip domain lookup\nip domain name local\nip cef\nno ipv6 cef\n!\nmultilink bundle-name authenticated\n!\n!\n!\n!\n!\n!\n!\n!\nusername ******** privilege 15 secret 4 tnhtc92DXBhelxjYk8LWJrPV36S2i4ntXrpb4RFmfqY\n!\nredundancy\n!\n!\nip tcp synwait-time 5\n! \n!\n!\n!\n!\n!\n!\n!\n!\n!\n!\n!\ninterface Loopback0\n description ROUTER-ID\n ip address 155.0.0.1 255.255.255.255\n ip ospf 1 area 0\n!\ninterface Ethernet0/0\n description Link to R2\n ip address 10.0.12.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 1 area 0\n!\ninterface Ethernet0/1\n description Link to R3\n ip address 10.0.13.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 1 area 0\n!\ninterface Ethernet0/2\n description Link to R4\n ip address 10.0.14.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 1 area 0\n!\ninterface Ethernet0/3\n description Link to R5\n ip address 10.0.15.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 1 area 0\n!\ninterface Ethernet1/0\n no ip address\n shutdown\n!\ninterface Ethernet1/1\n no ip address\n shutdown\n!\ninterface Ethernet1/2\n no ip address\n shutdown\n!\ninterface Ethernet1/3\n description Link to Ansible Controller\n vrf forwarding MGMT\n ip address 10.0.0.1 255.255.255.0\n!\ninterface Serial2/0\n no ip address\n shutdown\n serial restart-delay 0\n!\ninterface Serial2/1\n no ip address\n shutdown\n serial restart-delay 0\n!\ninterface Serial2/2\n no ip address\n shutdown\n serial restart-delay 0\n!\ninterface Serial2/3\n no ip address\n shutdown\n serial restart-delay 0\n!\ninterface Serial3/0\n no ip address\n shutdown\n serial restart-delay 0\n!\ninterface Serial3/1\n no ip address\n shutdown\n serial restart-delay 0\n!\ninterface Serial3/2\n no ip address\n shutdown\n serial restart-delay 0\n!\ninterface Serial3/3\n no ip address\n shutdown\n serial restart-delay 0\n!\nrouter ospf 1\n mpls ldp autoconfig\n!\nip forward-protocol nd\n!\n!\nno ip http server\nno ip http secure-server\n!\n!\n!\n!\ncontrol-plane\n!\n!\n!\n!\n!\n!\n!\nline con 0\n exec-timeout 0 0\n privilege level 15\n logging synchronous\nline aux 0\nline vty 0 4\n exec-timeout 0 0\n privilege level 15\n logging synchronous\n login local\n transport input all\n!\n!\nend", 
+    "ansible_net_filesystems": [
+        "system:"
+    ], 
+    "ansible_net_gather_subset": [
+        "hardware", 
+        "default", 
+        "interfaces", 
+        "config"
+    ], 
+    "ansible_net_hostname": "CORE-R1", 
+    "ansible_net_image": "unix:/opt/gns3/images/IOU/i86bi_linux-adventerprisek9-m-15.2.4M1.bin", 
+    "ansible_net_interfaces": {
+        "Ethernet0/0": {
+            "bandwidth": 10000, 
+            "description": "Link to R2", 
+            "duplex": null, 
+            "ipv4": {
+                "address": "10.0.12.1", 
+                "masklen": 30
+            }, 
+            "lineprotocol": "up ", 
+            "macaddress": "aabb.cc00.0600", 
+            "mediatype": null, 
+            "mtu": 1500, 
+            "operstatus": "up", 
+            "type": "AmdP2"
+        }, 
+        "Ethernet0/1": {
+            "bandwidth": 10000, 
+            "description": "Link to R3", 
+            "duplex": null, 
+            "ipv4": {
+                "address": "10.0.13.1", 
+                "masklen": 30
+            }, 
+            "lineprotocol": "up ", 
+            "macaddress": "aabb.cc00.0610", 
+            "mediatype": null, 
+            "mtu": 1500, 
+            "operstatus": "up", 
+            "type": "AmdP2"
+        }, 
+        "Ethernet0/2": {
+            "bandwidth": 10000, 
+            "description": "Link to R4", 
+            "duplex": null, 
+            "ipv4": {
+                "address": "10.0.14.1", 
+                "masklen": 30
+            }, 
+            "lineprotocol": "up ", 
+            "macaddress": "aabb.cc00.0620", 
+            "mediatype": null, 
+            "mtu": 1500, 
+            "operstatus": "up", 
+            "type": "AmdP2"
+        }, 
+        "Ethernet0/3": {
+            "bandwidth": 10000, 
+            "description": "Link to R5", 
+            "duplex": null, 
+            "ipv4": {
+                "address": "10.0.15.1", 
+                "masklen": 30
+            }, 
+            "lineprotocol": "up ", 
+            "macaddress": "aabb.cc00.0630", 
+            "mediatype": null, 
+            "mtu": 1500, 
+            "operstatus": "up", 
+            "type": "AmdP2"
+        }, 
+        "Ethernet1/0": {
+            "bandwidth": 10000, 
+            "description": null, 
+            "duplex": null, 
+            "ipv4": null, 
+            "lineprotocol": "down ", 
+            "macaddress": "aabb.cc00.0601", 
+            "mediatype": null, 
+            "mtu": 1500, 
+            "operstatus": "administratively down", 
+            "type": "AmdP2"
+        }, 
+        "Ethernet1/1": {
+            "bandwidth": 10000, 
+            "description": null, 
+            "duplex": null, 
+            "ipv4": null, 
+            "lineprotocol": "down ", 
+            "macaddress": "aabb.cc00.0611", 
+            "mediatype": null, 
+            "mtu": 1500, 
+            "operstatus": "administratively down", 
+            "type": "AmdP2"
+        }, 
+        "Ethernet1/2": {
+            "bandwidth": 10000, 
+            "description": null, 
+            "duplex": null, 
+            "ipv4": null, 
+            "lineprotocol": "down ", 
+            "macaddress": "aabb.cc00.0621", 
+            "mediatype": null, 
+            "mtu": 1500, 
+            "operstatus": "administratively down", 
+            "type": "AmdP2"
+        }, 
+        "Ethernet1/3": {
+            "bandwidth": 10000, 
+            "description": "Link to Ansible Controller", 
+            "duplex": null, 
+            "ipv4": {
+                "address": "10.0.0.1", 
+                "masklen": 24
+            }, 
+            "lineprotocol": "up ", 
+            "macaddress": "aabb.cc00.0631", 
+            "mediatype": null, 
+            "mtu": 1500, 
+            "operstatus": "up", 
+            "type": "AmdP2"
+        }, 
+        "Loopback0": {
+            "bandwidth": 8000000, 
+            "description": "ROUTER-ID", 
+            "duplex": null, 
+            "ipv4": {
+                "address": "155.0.0.1", 
+                "masklen": 32
+            }, 
+            "lineprotocol": "up ", 
+            "macaddress": "155.0.0.1/32", 
+            "mediatype": null, 
+            "mtu": 1514, 
+            "operstatus": "up", 
+            "type": null
+        }, 
+        "Serial2/0": {
+            "bandwidth": 1544, 
+            "description": null, 
+            "duplex": null, 
+            "ipv4": null, 
+            "lineprotocol": "down ", 
+            "macaddress": null, 
+            "mediatype": null, 
+            "mtu": 1500, 
+            "operstatus": "administratively down", 
+            "type": null
+        }, 
+        "Serial2/1": {
+            "bandwidth": 1544, 
+            "description": null, 
+            "duplex": null, 
+            "ipv4": null, 
+            "lineprotocol": "down ", 
+            "macaddress": null, 
+            "mediatype": null, 
+            "mtu": 1500, 
+            "operstatus": "administratively down", 
+            "type": null
+        }, 
+        "Serial2/2": {
+            "bandwidth": 1544, 
+            "description": null, 
+            "duplex": null, 
+            "ipv4": null, 
+            "lineprotocol": "down ", 
+            "macaddress": null, 
+            "mediatype": null, 
+            "mtu": 1500, 
+            "operstatus": "administratively down", 
+            "type": null
+        }, 
+        "Serial2/3": {
+            "bandwidth": 1544, 
+            "description": null, 
+            "duplex": null, 
+            "ipv4": null, 
+            "lineprotocol": "down ", 
+            "macaddress": null, 
+            "mediatype": null, 
+            "mtu": 1500, 
+            "operstatus": "administratively down", 
+            "type": null
+        }, 
+        "Serial3/0": {
+            "bandwidth": 1544, 
+            "description": null, 
+            "duplex": null, 
+            "ipv4": null, 
+            "lineprotocol": "down ", 
+            "macaddress": null, 
+            "mediatype": null, 
+            "mtu": 1500, 
+            "operstatus": "administratively down", 
+            "type": null
+        }, 
+        "Serial3/1": {
+            "bandwidth": 1544, 
+            "description": null, 
+            "duplex": null, 
+            "ipv4": null, 
+            "lineprotocol": "down ", 
+            "macaddress": null, 
+            "mediatype": null, 
+            "mtu": 1500, 
+            "operstatus": "administratively down", 
+            "type": null
+        }, 
+        "Serial3/2": {
+            "bandwidth": 1544, 
+            "description": null, 
+            "duplex": null, 
+            "ipv4": null, 
+            "lineprotocol": "down ", 
+            "macaddress": null, 
+            "mediatype": null, 
+            "mtu": 1500, 
+            "operstatus": "administratively down", 
+            "type": null
+        }, 
+        "Serial3/3": {
+            "bandwidth": 1544, 
+            "description": null, 
+            "duplex": null, 
+            "ipv4": null, 
+            "lineprotocol": "down ", 
+            "macaddress": null, 
+            "mediatype": null, 
+            "mtu": 1500, 
+            "operstatus": "administratively down", 
+            "type": null
+        }
+    }, 
+    "ansible_net_memfree_mb": 61845, 
+    "ansible_net_memtotal_mb": 124582, 
+    "ansible_net_model": null, 
+    "ansible_net_neighbors": {
+        "null": [
+            {
+                "host": null, 
+                "port": null
+            }
+        ]
+    }, 
+    "ansible_net_serialnum": "2048006", 
+    "ansible_net_version": "15.2(4)M1"
+}

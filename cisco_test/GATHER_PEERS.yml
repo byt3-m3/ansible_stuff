@@ -1,0 +1,76 @@
+---
+- name: Gather Peers
+  hosts: "ios-devices"
+  gather_facts: false
+  connection: local
+  
+
+  vars:
+    cli:
+      host: "{{ inventory_hostname }}"
+      username: admin
+      password: admin
+      transport: cli
+
+  tasks:
+     - name: gethering hostname
+       ios_command:
+        commands: show run | include hostname
+        provider: "{{ cli }}"
+       register: hostname_out.stdout_lines
+ 
+ 
+     - name: Displaying Hostname
+       debug:
+         var: hostname_out.stdout_lines
+ 
+ 
+     - name: gethering interface
+       ios_command:
+        commands: show ip int bri | in up
+        provider: "{{ cli }}"
+       register: interfaces_out
+  
+  
+     - name: gethering bgp peerings
+       ios_command:
+        commands: show ip bgp summary | begin Neighbor
+        provider: "{{ cli }}"
+
+       register: bgp_out
+  
+  
+     - name: gethering ospf neighbors
+       ios_command:
+        commands: show ip ospf neighbor
+        provider: "{{ cli }}"
+
+       register: ospf_out 
+  
+  
+     - name: show interfaces output
+       debug:
+         var: interfaces_out.stdout_lines
+   
+   
+     - name: show bgp output
+       debug:
+         var: bgp_out.stdout_lines
+        
+         
+     - name: show ospf output
+       debug:
+         var: ospf_out.stdout_lines
+  
+  
+     - name: copy Interfaces  output to file
+       copy: content="{{ interfaces_out.stdout[0] }}" dest=./output/bgp.{{ inventory_hostname }}.txt       
+  
+  
+     - name: copy BGP  output to file
+       copy: content="{{ bgp_out.stdout[0] }}" dest=./output/bgp.{{ inventory_hostname }}.txt       
+  
+  
+     - name: copy OSPF  output to file
+       copy: content="{{ ospf_out.stdout[0] }}" dest=./output/ospf.{{ inventory_hostname }}.txt
+

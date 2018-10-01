@@ -1,0 +1,21 @@
+---
+  vars:
+    router:
+      HOSTNAME: {{ hostname }}
+
+      INTERFACE_1: eth0/0
+      INTERFACE_1_PEER: R2
+      INTERFACE_1_IP: "10.0.12.1"
+      INTERFACE_1_MASK: "255.255.255.0"
+
+      INTERFACE_2: eth0/1
+      INTERFACE_2_PEER: R3
+      INTERFACE_2_IP: "10.0.13.1"
+      INTERFACE_2_MASK: "255.255.255.0"
+
+
+      INTERFACE_3: eth0/2
+      INTERFACE_3_PEER: R4
+      INTERFACE_3_IP: "10.0.14.1"
+      INTERFACE_3_MASK: "255.255.255.0"
+

@@ -1,0 +1,172 @@
+---
+#Basic Interface Configuration for Core Routers
+- name: CORE-R1 Interface Configuration
+  hosts: "CORE-R1"
+  gather_facts: false
+  connection: local
+  
+
+  vars:
+       cli:
+        username: cisco
+        password: cisco
+
+  tasks:
+    - name: Pushing Interface Template
+      ios_config:
+       src: ./interface_template_core.j2
+       provider: "{{ cli }}"
+
+- name: CORE-R2 Interface Configuration
+  hosts: "CORE-R2"
+  gather_facts: false
+  connection: local
+  
+
+  vars:
+       cli:
+        username: cisco
+        password: cisco
+
+  tasks:
+    - name: Pushing Interface Template
+      ios_config:
+       src: ./interface_template_core.j2
+       provider: "{{ cli }}"
+
+- name: CORE-R3 Interface Configuration
+
+  hosts: "CORE-R3"
+  gather_facts: false
+  connection: local
+  
+
+  vars:
+       cli:
+        username: cisco
+        password: cisco
+
+  tasks:
+    - name: Pushing Interface Template
+      ios_config:
+       src: ./interface_template_core.j2
+       provider: "{{ cli }}"
+
+- name: CORE-R4 Interface Configuration
+  hosts: "CORE-R4"
+  gather_facts: false
+  connection: local
+  
+
+  vars:
+       cli:
+        username: cisco
+        password: cisco
+
+  tasks:
+    - name: Pushing Interface Template
+      ios_config:
+       src: ./interface_template_core.j2
+       provider: "{{ cli }}"
+
+
+#Basic Interface Configuration for PE Routers
+- name: PE-R5 Interface Configuration
+  hosts: "PE-R5"
+  gather_facts: false
+  connection: local
+  
+
+  vars:
+       cli:
+        username: cisco
+        password: cisco
+
+  tasks:
+    - name: Pushing Interface Template
+      ios_config:
+       src: ./interface_template_pe.j2
+       provider: "{{ cli }}"
+
+- name: CORE-R1 PE downlink Interface Configuration
+  hosts: "CORE-R1"
+  gather_facts: false
+  connection: local
+  
+
+  vars:
+       cli:
+        username: cisco
+        password: cisco
+
+  tasks:
+    - name: Pushing Interface Template
+      ios_config:
+       src: ./interface_template_core_pe.j2
+       provider: "{{ cli }}"
+- name: CORE-R3 PE downlink Interface Configuration
+  hosts: "CORE-R3"
+  gather_facts: false
+  connection: local
+  
+
+  vars:
+       cli:
+        username: cisco
+        password: cisco
+
+  tasks:
+    - name: Pushing Interface Template
+      ios_config:
+       src: ./interface_template_core_pe.j2
+       provider: "{{ cli }}"
+#Basic Interface Configuration for PE Routers
+- name: New PE-R6 Interface Configuration
+  hosts: "PE-R6"
+  gather_facts: false
+  connection: local
+  
+
+  vars:
+       cli:
+        username: cisco
+        password: cisco
+
+  tasks:
+    - name: Pushing Interface Template
+      ios_config:
+       src: ./interface_template_pe.j2
+       provider: "{{ cli }}"
+
+- name: CORE-R2 PE downlink Interface Configuration
+  hosts: "CORE-R2"
+  gather_facts: false
+  connection: local
+  
+
+  vars:
+       cli:
+        username: cisco
+        password: cisco
+
+  tasks:
+    - name: Pushing Interface Template
+      ios_config:
+       src: ./interface_template_core_pe.j2
+       provider: "{{ cli }}"
+- name: CORE-R4 PE downlink Interface Configuration
+  hosts: "CORE-R4"
+  gather_facts: false
+  connection: local
+  
+
+  vars:
+       cli:
+        username: cisco
+        password: cisco
+
+  tasks:
+    - name: Pushing Interface Template
+      ios_config:
+       src: ./interface_template_core_pe.j2
+       provider: "{{ cli }}"

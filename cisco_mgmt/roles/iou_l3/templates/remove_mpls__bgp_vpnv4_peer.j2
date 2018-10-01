@@ -1,0 +1,6 @@
+router bgp {{  BGP_ASN }}
+ !
+ address-family vpnv4
+  no neighbor {{ BGP_PEER }}  activate
+  no neighbor {{ BGP_PEER }}  send-community extended
+  no neighbor {{ BGP_PEER }}  inherit peer-policy {{ PEER_SESSION_NAME }}

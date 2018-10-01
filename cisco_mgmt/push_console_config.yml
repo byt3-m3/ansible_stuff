@@ -1,0 +1,17 @@
+---
+- name: Configure basic console settings
+  hosts: "ACTIVE_NODES"
+  gather_facts: false
+  connection: local
+
+  vars:
+       cli:
+        username: cisco
+        password: cisco
+
+
+  tasks:
+    - name: Pushing config to lab devices
+      ios_config:
+       src: ./templates/console_base.j2
+       provider: "{{ cli }}"

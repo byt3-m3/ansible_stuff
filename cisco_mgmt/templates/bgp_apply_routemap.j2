@@ -1,0 +1,3 @@
+router bgp {{ BGP_ASN }}
+ template peer-policy IBGP_PEER_POLICY
+  route-map {{ ROUTEMAP_NAME }} out
