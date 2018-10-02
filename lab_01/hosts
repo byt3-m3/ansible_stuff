@@ -1,0 +1,13 @@
+[ios]
+HQ-R1 ansible_ssh_host=10.0.0.1
+
+[ios:vars]
+
+ansible_ssh_pass=ansible
+ansible_become_pass=ansible
+remote_user=pi
+ansible_network_os=ios
+ansible_connection=network_cli
+
+
+
