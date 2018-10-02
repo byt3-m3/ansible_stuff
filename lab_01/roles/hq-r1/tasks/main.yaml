@@ -1,0 +1,2 @@
+template: src=hq-r1.j2 dest={{item.hostname}}.txt
+with_items: "{{ hq-r1 }}"
