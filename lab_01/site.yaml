@@ -1,5 +1,5 @@
 ---
 - hosts: localhost
-
   roles:
-    - hq-r1
+    - routers
+    - firewalls

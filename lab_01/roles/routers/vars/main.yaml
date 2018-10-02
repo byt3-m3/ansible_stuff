@@ -1,0 +1,32 @@
+enterprise_routers:
+  - hostname: HQ-R1
+    loopback0_ip: 1.1.1.1 255.255.255.255
+    uplink_ip: dhcp
+    fw_downlink_ip: 10.0.0.1 255.255.255.252
+    nat_outside_interface: Ethernet0/0
+    nat_inside_interface: Ethernet0/1
+
+  - hostname: BR1-R2
+    loopback0_ip: 1.1.1.2 255.255.255.255
+    uplink_ip: dhcp
+    fw_downlink_ip: 10.1.0.1 255.255.255.252
+    nat_outside_interface: Ethernet0/0
+    nat_inside_interface: Ethernet0/1
+
+  - hostname: BR2-R3
+    loopback0_ip: 1.1.1.3 255.255.255.255
+    uplink_ip: dhcp
+    fw_downlink_ip: 10.2.0.1 255.255.255.252
+    nat_outside_interface: Ethernet0/0
+    nat_inside_interface: Ethernet0/1
+
+
+core_routers:
+  - hostname: HQ-CORE-R4
+    loopback0_ip: 1.1.1.4 255.255.255.255
+    BGP_AS: 65000
+    interface_a: Gi1
+    interface_a_ip: 155.0.45.4 255.255.255.252
+    interface_a_desc: Link to R5
+    vrf_ent_interface_a: Gi2
+    vrf_ent_name: enterprise

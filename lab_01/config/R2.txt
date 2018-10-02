@@ -1,0 +1,21 @@
+hostname R2
+!
+interface loopback0
+  ip address 10.0.0.2 255.255.255.255
+  ip ospf 1 area 0
+!
+ip domain-name lab.local
+!
+username ansible secret ansible
+!
+router ospf 1
+
+
+interface eth0/0
+  description UPLINK TO ISP
+  ip address dhcp
+
+interface eth0/1
+  description DOWNLINK TO FW
+  ip address 10.0.0.1 255.255.255.252
+  ip ospf 1 area 0 
