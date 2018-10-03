@@ -1,4 +1,4 @@
 ---
  - name: Generating enterprise firewall base configs
-   template: src=enterprise_router_base.j2 dest=config/{{ item.hostname }}.txt
+   template: src=router_base.j2 dest=config/{{ item.hostname }}.txt
    with_items: "{{ enterprise_routers }}"

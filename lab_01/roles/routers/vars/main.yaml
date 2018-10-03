@@ -1,32 +1,50 @@
 enterprise_routers:
   - hostname: HQ-R1
-    loopback0_ip: 1.1.1.1 255.255.255.255
-    uplink_ip: dhcp
-    fw_downlink_ip: 10.0.0.1 255.255.255.252
-    nat_outside_interface: Ethernet0/0
-    nat_inside_interface: Ethernet0/1
+    nat_enabled: True
+    nat_external: eth0/0
+    bgp_asn: 65000
+    router_id: 1.1.1.1
+    links:
+      - id: loopback 0
+        description: MGMT_IP
+        ip_addr: 1.1.1.1 255.255.255.255
+        mtu: 1500
+        nat: False
 
-  - hostname: BR1-R2
-    loopback0_ip: 1.1.1.2 255.255.255.255
-    uplink_ip: dhcp
-    fw_downlink_ip: 10.1.0.1 255.255.255.252
-    nat_outside_interface: Ethernet0/0
-    nat_inside_interface: Ethernet0/1
+      - id: eth0/0
+        description: Uplink
+        ip_addr: dhcp
+        mtu: 1500
+        nat: outside
 
-  - hostname: BR2-R3
-    loopback0_ip: 1.1.1.3 255.255.255.255
-    uplink_ip: dhcp
-    fw_downlink_ip: 10.2.0.1 255.255.255.252
-    nat_outside_interface: Ethernet0/0
-    nat_inside_interface: Ethernet0/1
+      - id: eth0/1
+        description: Downlink
+        ip_addr: 155.0.0.1 255.255.255.0
+        mtu: 1500
+        nat: inside
+
+  - hostname: BR1-R1
+    nat_enabled: True
+    nat_external: eth0/0
+    bgp_asn: 65000
+    router_id: 1.1.1.2
+    links:
+      - id: loopback 0
+        description: MGMT_IP
+        ip_addr: 1.1.1.2 255.255.255.255
+        mtu: 1500
+        nat: False
+
+      - id: eth0/0
+        description: Uplink
+        ip_addr: dhcp
+        mtu: 1500
+        nat: outside
+
+      - id: eth0/1
+        description: Downlink
+        ip_addr: 155.1.0.1 255.255.255.0
+        mtu: 1500
+        nat: inside
 
 
-core_routers:
-  - hostname: HQ-CORE-R4
-    loopback0_ip: 1.1.1.4 255.255.255.255
-    BGP_AS: 65000
-    interface_a: Gi1
-    interface_a_ip: 155.0.45.4 255.255.255.252
-    interface_a_desc: Link to R5
-    vrf_ent_interface_a: Gi2
-    vrf_ent_name: enterprise

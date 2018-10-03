@@ -1,4 +1,9 @@
 ---
- - name: Generating enterprise router base configs
-   template: src=enterprise_router_base.j2 dest=config/{{ item.hostname }}.txt
-   with_items: "{{ enterprise_routers }}"
+ - name: Generating basic configuration for enterprise routers
+   template: src=router_base.j2 dest=config/{{ item.hostname }}.txt
+   with_items:
+    - "{{ enterprise_routers }}"
+
+# - name: Generating core router base configs
+#   template: src=core_route_base.j2 dest=config/core_{{ item.hostname }}.txt
+#   with_items: "{{  core_routers }}"
