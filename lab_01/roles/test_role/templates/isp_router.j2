@@ -1,0 +1,28 @@
+hostname {{ item.hostname }}
+!
+{% include "aliases.j2" %}
+!
+!
+ip domain-name lab.local
+!
+username ansible secret ansible
+username cbaxter secret pimpin12
+!
+{% for link in item.links %}
+interface {{ link.id }}
+ description {{ link.description }}
+ ip address {{ link.ip_addr }}
+ mtu {{ link.mtu }}
+{% if link.id == "ethernet 0/0" %}
+ nat outside
+{% elif link.id != "ethernet 0/0" %}
+ nat inside
+{% endif %}
+ no shutdown
+!
+{% endfor %}
+!
+ip nat inside source list 1 interface eth0/0 overload
+!
+{% include "bgp_base.j2" %}
+{% include "console.j2" %}

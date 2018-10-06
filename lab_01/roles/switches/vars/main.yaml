@@ -1,0 +1,211 @@
+CORE_SWITCHES:
+- hostname: HQ-CORE-SW1
+  router_id: 10.1.0.3
+  vlans:
+  - id: 99
+    name: MGMT
+  links:
+  - id: vlan 99
+    description: MGMT_IP
+    link_type: l3
+    ip_addr: 10.1.0.3 255.255.255.0
+
+  - id: eth0/0
+    description: Uplink to FW
+    link_type: l2
+    switchport_mode: trunk
+    allowed_vlans: ['1-1024']
+
+  - id: eth0/1
+    description: Downlink to BLD1-SW1
+    switchport_mode: trunk
+    link_type: l2
+    allowed_vlans: ['1-1024']
+
+  - id: eth0/3
+    description: Crosslink to CORE-SW2
+    switchport_mode: trunk
+    link_type: l2
+    allowed_vlans: ['1-1024']
+
+  - id: eth1/0
+    description: Downlink to DC-SW1
+    switchport_mode: trunk
+    link_type: l2
+    allowed_vlans: ['1-1024']
+
+  - id: eth1/1
+    description: Downlink to DC-SW2
+    switchport_mode: trunk
+    link_type: l2
+    allowed_vlans: ['1-1024']
+
+
+- hostname: HQ-CORE-SW2
+  router_id: 10.1.0.4
+  vlans:
+  - id: 99
+    name: MGMT
+  links:
+  - id: vlan 99
+    description: MGMT_IP
+    link_type: l3
+    ip_addr: 10.1.0.4 255.255.255.0
+
+  - id: eth0/0
+    description: Uplink to FW
+    switchport_mode: trunk
+    link_type: l2
+    allowed_vlans: ['1-1024']
+
+  - id: eth1/2
+    description: Downlink to BLD1-SW1
+    switchport_mode: trunk
+    link_type: l2
+    allowed_vlans: ['1-1024']
+
+  - id: eth0/3
+    description: Crosslink to CORE-SW2
+    switchport_mode: trunk
+    link_type: l2
+    allowed_vlans: ['1-1024']
+
+  - id: eth1/0
+    description: Downlink to DC-SW1
+    switchport_mode: trunk
+    link_type: l2
+    allowed_vlans: ['1-1024']
+
+  - id: eth1/1
+    description: Downlink to DC-SW2
+    switchport_mode: trunk
+    link_type: l2
+    allowed_vlans: ['1-1024']
+
+DC_SWITCHES:
+- hostname: HQ-DC-SW1
+  router_id: 10.1.0.5
+  vlans:
+  - id: 99
+    name: MGMT
+  - id: 100
+    name: MGMT
+  links:
+  - id: vlan 99
+    description: MGMT_IP
+    link_type: l3
+    ip_addr: 10.1.0.5 255.255.255.0
+
+  - id: vlan 100
+    description: SERVERS
+    link_type: l3
+    ip_addr: 172.16.100.1 255.255.255.248
+
+  - id: eth0/0
+    description: Uplink to CORE-SW1
+    switchport_mode: trunk
+    link_type: l2
+    allowed_vlans: ['1-1024']
+
+  - id: eth0/1
+    description: Uplink to CORE-SW1
+    switchport_mode: trunk
+    link_type: l2
+    allowed_vlans: ['1-1024']
+
+  - id: eth0/2
+    description: Downlink to TOR-SW1
+    switchport_mode: trunk
+    link_type: l2
+    allowed_vlans: ['1-1024']
+
+  - id: eth0/3
+    description: Crosslink to DC-SW2
+    link_type: l3
+    ip_addr: 10.1.12.1 255.255.255.252
+
+- hostname: HQ-DC-SW2
+  router_id: 10.1.0.6
+  vlans:
+  - id: 99
+    name: MGMT
+  - id: 100
+    name: MGMT
+  links:
+  - id: vlan 99
+    description: MGMT_IP
+    link_type: l3
+    ip_addr: 10.1.0.6 255.255.255.0
+
+  - id: vlan 100
+    description: SERVERS
+    link_type: l3
+    ip_addr: 172.16.100.2 255.255.255.248
+
+  - id: eth0/0
+    description: Uplink to CORE-SW1
+    switchport_mode: trunk
+    link_type: l2
+    allowed_vlans: ['1-1024']
+
+  - id: eth0/1
+    description: Uplink to CORE-SW1
+    switchport_mode: trunk
+    link_type: l2
+    allowed_vlans: ['1-1024']
+
+  - id: eth0/2
+    description: Downlink to TOR-SW1
+    switchport_mode: trunk
+    link_type: l2
+    allowed_vlans: ['1-1024']
+
+  - id: eth0/3
+    description: Crosslink to DC-SW2
+    link_type: l3
+    ip_addr: 10.1.12.2 255.255.255.252
+
+#TOR_SWITCHS:
+#- hostname: HQ-TOR-SW1
+#  router_id: 10.1.0.7
+#  vlans:
+#  - id: 99
+#    name: MGMT
+#  - id: 100
+#      name: SERVERS
+#  links:
+#  - id: vlan 99
+#    description: MGMT_IP
+#    link_type: l3
+#    ip_addr: 10.1.0.7 255.255.255.0
+#
+#
+#  - id: eth0/0
+#    description: Uplink to FW
+#    link_type: l2
+#    switchport_mode: trunk
+#    allowed_vlans: ['1-1024']
+#
+#  - id: eth0/1
+#    description: Downlink to BLD1-SW1
+#    switchport_mode: trunk
+#    link_type: l2
+#    allowed_vlans: ['1-1024']
+#
+#  - id: eth0/3
+#    description: Crosslink to CORE-SW2
+#    switchport_mode: trunk
+#    link_type: l2
+#    allowed_vlans: ['1-1024']
+#
+#  - id: eth1/0
+#    description: Downlink to DC-SW1
+#    switchport_mode: trunk
+#    link_type: l2
+#    allowed_vlans: ['1-1024']
+#
+#  - id: eth1/1
+#    description: Downlink to DC-SW2
+#    switchport_mode: trunk
+#    link_type: l2
+#    allowed_vlans: ['1-1024']

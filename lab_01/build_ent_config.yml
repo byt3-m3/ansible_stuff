@@ -1,0 +1,6 @@
+---
+- name: Building Enterprise Router Configs
+  hosts: localhost
+  gather_facts: False
+  roles:
+    - ent_router_config

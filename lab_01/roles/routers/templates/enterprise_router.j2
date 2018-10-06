@@ -11,18 +11,9 @@ username ansible secret ansible
 interface {{ link.id }}
  description {{ link.description }}
  ip address {{ link.ip_addr }}
- mtu {{ link.mtu }}
-{% if link.nat == "outside" %}
- ip nat outside
-{% elif link.nat == "inside" %}
- ip nat inside
-{% endif %}
  no shutdown
 !
 {% endfor %}
 !
-{% if item.nat_enabled == True %}
-ip nat inside source list 1 interface {{ item.nat_external }} overload
-{% endif %}
-!
 {% include "bgp_base.j2" %}
+{% include "console.j2" %}

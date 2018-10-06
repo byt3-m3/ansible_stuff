@@ -1,13 +1,42 @@
 [ios]
-HQ-R1 ansible_ssh_host=10.0.0.1
+HQ-R1 ansible_ssh_host=localhost
 
 [ios:vars]
-
 ansible_ssh_pass=ansible
 ansible_become_pass=ansible
 remote_user=pi
 ansible_network_os=ios
 ansible_connection=network_cli
 
+[localhost]
+127.0.0.1
 
 
+[isp_devices]
+155.0.0.1
+
+[hq_routers]
+10.1.0.1
+
+[hq_switches]
+10.1.0.3
+10.1.0.4
+10.1.0.5
+10.1.0.6
+10.1.99.10
+
+[hq_fws]
+10.1.0.2
+
+[hq-devices:children]
+hq_routers
+hq_switches
+hq_fws
+
+[hq-devices:vars]
+ansible_ssh_pass=ansible
+ansible_ssh_host=localhost
+ansible_become_pass=ansible
+remote_user=pi
+ansible_network_os=ios
+ansible_connection=network_cli

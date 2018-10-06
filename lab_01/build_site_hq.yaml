@@ -1,0 +1,7 @@
+---
+- name: Building configs
+  hosts: localhost
+  gather_facts: False
+  roles:
+    - routers
+    - switches

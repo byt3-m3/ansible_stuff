@@ -1,0 +1,33 @@
+#Role: ent_router_config
+
+This role represents the enterprise router in the Lab 01 topology. 
+
+Configuration keys reside in the "configs" object. example
+
+```yaml
+configs:
+    - hostname: BR1-R1-TEST
+      router_id: 10.2.0.1
+      bgp:
+        enabled: True
+        asn: 100
+        peers:
+        - remote_ip: 155.1.0.5
+          remote_asn: 200
+      links:
+        - id: loopback 0
+          description: MGMT_IP
+          ip_addr: 10.2.0.1 255.255.255.255
+          mtu: 1500
+          nat: False
+    
+        - id: eth0/0
+          description: Uplink to ISP
+          ip_addr: 155.1.0.6 255.255.255.252
+          mtu: 1500
+    
+        - id: eth0/1
+          description: Downlink to FW
+          ip_addr: 10.2.1.1 255.255.255.252
+          mtu: 1500
+```

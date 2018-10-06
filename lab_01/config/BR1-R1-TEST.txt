@@ -1,0 +1,48 @@
+hostname BR1-R1-TEST
+!
+alias exec siu show ip int br | inc up
+alias exec sid show ip int br | inc down
+alias exec siro show ip route ospf
+alias exec siro3 show ip route ospfv3
+alias exec sire show ip route eigrp
+alias exec sirb show ip route bgp
+alias exec sic show ip cef
+alias exec sir show ip route
+alias exec siv show ip vrf
+alias exec sib show ip bgp
+alias exec sibv4a show ip bgp vpnv4 all
+alias exec sbv4 show bgp vpnv4 unicast all summary
+alias exec srb show run | sec router bgp
+alias exec sro show run | sec router ospf
+alias exec sro3 show run | sec router ospfv3
+alias exec sre show run | sec router eigrp
+alias exec srr show run | sec route-map!
+!
+ip domain-name lab.local
+!
+username ansible secret ansible
+!
+interface loopback 0
+ description MGMT_IP
+ ip address 10.2.0.1 255.255.255.255
+ no shutdown
+!
+interface eth0/0
+ description Uplink to ISP
+ ip address 155.1.0.6 255.255.255.252
+ no shutdown
+!
+interface eth0/1
+ description Downlink to FW
+ ip address 10.2.1.1 255.255.255.252
+ no shutdown
+!
+!
+router bgp 100
+ bgp router-id 10.2.0.1
+ bgp log-neighbor-changes
+ neighbor 155.1.0.5  remote-as 200
+!
+line con 0
+ exec-timeout 0 0
+ logging synchronous

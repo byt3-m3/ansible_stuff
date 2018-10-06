@@ -1,0 +1,5 @@
+---
+- name: Generating basic configurations enterprise routers
+  template: src=test_template.jinja2 dest=config/test.txt
+  with_items:
+  - "{{ hostvars['vars']['configs'] }}"
