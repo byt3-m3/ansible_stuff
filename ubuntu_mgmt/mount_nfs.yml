@@ -1,5 +1,5 @@
 ---
-- name: Generate BGP Config for hosts
+- name: Generate BGP Config for hosts.ini
   hosts: "PLEXSERVERS"
   gather_facts: false
   connection: local

@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Copy hosts file to ansible host
+      become: yes
+      copy:
+        src: server_files/hosts
+        dest: /etc/hosts_new

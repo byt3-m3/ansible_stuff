@@ -1,0 +1,62 @@
+---
+- hosts: isp-r1
+  gather_facts: no
+  name: Building config for isp-r1
+  roles:
+  - base_ios_router_config
+
+- hosts: hq-r1
+  gather_facts: no
+  name: Building config for hq-r1
+  roles:
+  - base_ios_router_config
+
+- hosts: hq-bld1-sw1
+  gather_facts: no
+  name: Building config for hq-bld1-sw1
+  roles:
+  - base_ios_switch_config
+
+- hosts: hq-tcf-sw1
+  gather_facts: no
+  name: Building config for hq-tcf-sw1
+  roles:
+  - base_ios_switch_config
+
+- hosts: hq-dc-sw1
+  gather_facts: no
+  name: Building config for hq-dc-sw1
+  roles:
+  - base_ios_switch_config
+
+- hosts: hq-dc-sw2
+  gather_facts: no
+  name: Building config for hq-dc-sw2
+  roles:
+  - base_ios_switch_config
+
+- hosts: hq-core-sw1
+  gather_facts: no
+  name: Building config for hq-core-sw1
+  roles:
+  - base_ios_switch_config
+
+- hosts: hq-core-sw2
+  gather_facts: no
+  name: Building config for hq-core-sw2
+  roles:
+  - base_ios_switch_config
+
+- hosts: hq-fw
+  gather_facts: no
+  name: Building config for hq-core-sw2
+  roles:
+  - base_asa_config
+#
+#- hosts: localhost
+#  tasks:
+#  - name: Testing
+#    uri:
+#      url: http://www.google.com
+#      return_content: yes
+#    register: webpage

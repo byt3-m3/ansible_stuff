@@ -1,26 +1,26 @@
 config t
-{% include "aliases.j2" %}
+{% include "../../../../lab_01_a/roles/base_ios_router_config/templates/aliases.j2" %}
 !
 hostname {{ item.hostname }}
 !
 spanning-tree mode rapid-pvst
 !
-{% for link in item.links %}
-interface {{ link.id }}
- description {{ link.description }}
-{% if link.link_type == "l3" %}
- no switchport
- ip address {{ link.ip_addr }}
- no shutdown
-!
-{% elif link.link_type == "l2" %}
- switchport trunk encapsulation dot1q
- switchport mode trunk
-!
-{% endif %}
-{% endfor %}
-!
-exit
+{#{% for link in item.links %}#}
+{#interface {{ link.id }}#}
+{# description {{ link.description }}#}
+{#{% if link.link_type == "l3" %}#}
+{# no switchport#}
+{# ip address {{ link.ip_addr }}#}
+{# no shutdown#}
+{#!#}
+{#{% elif link.link_type == "l2" %}#}
+{# switchport trunk encapsulation dot1q#}
+{# switchport mode trunk#}
+{#!#}
+{#{% endif %}#}
+{#{% endfor %}#}
+{#!#}
+{#exit#}
 {% for vlan in item.vlans %}
 !
 vlan {{ vlan.id }}
@@ -28,7 +28,7 @@ vlan {{ vlan.id }}
  exit
 !
 {% endfor %}
-{% include "console.j2" %}
+{% include "../../../../lab_01_a/roles/base_ios_router_config/templates/console.j2" %}
 
 end
 wr

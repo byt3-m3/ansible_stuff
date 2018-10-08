@@ -1,0 +1,47 @@
+hostname: HQ-CORE-SW1
+router_id: 10.1.0.3
+vlans:
+- id: 99
+  name: MGMT
+- id: 100
+  name: FW_GW
+links:
+- id: vlan 99
+  description: MGMT_IP
+  link_type: l3
+  ip_addr: 10.1.0.3 255.255.255.0
+
+- id: vlan 100
+  description: FW_GW
+  link_type: l3
+  ip_addr: 10.1.100.2 255.255.255.248
+
+- id: eth0/0
+  description: Uplink to TCF-SW1
+  link_type: l2
+  switchport_mode: trunk
+  allowed_vlans: ['1-1024']
+
+- id: eth0/1
+  description: Downlink to BLD1-SW1
+  switchport_mode: trunk
+  link_type: l2
+  allowed_vlans: ['1-1024']
+
+- id: eth0/3
+  description: Crosslink to CORE-SW2
+  switchport_mode: trunk
+  link_type: l2
+  allowed_vlans: ['1-1024']
+
+- id: eth1/0
+  description: Downlink to DC-SW1
+  switchport_mode: trunk
+  link_type: l2
+  allowed_vlans: ['1-1024']
+
+- id: eth1/1
+  description: Downlink to DC-SW2
+  switchport_mode: trunk
+  link_type: l2
+  allowed_vlans: ['1-1024']

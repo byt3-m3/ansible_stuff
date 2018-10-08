@@ -1,0 +1,10 @@
+---
+- name: Creating templates..
+  template:
+    src: base_config.j2
+    dest: config/{{ hostname }}
+  delegate_to: localhost
+
+#- name: Sending configurations to devices
+#  ios_config:
+#    src: config/{{ hostname }}

@@ -1,0 +1,19 @@
+
+{% if service_groups is defined %}
+{% include "object_group_service.j2" %}
+{% endif %}
+!
+{% if network_groups is defined %}
+{% include "object_group_network.j2" %}
+{% endif %}
+!
+{% for acl_rule in acls %}
+access-list {{ acl_rule.name }} remark ###############################################
+access-list {{ acl_rule.name }} remark #     Rule for {{ acl_rule.description }}
+access-list {{ acl_rule.name }} remark ###############################################
+{% for rule in acl_rule.rules %}
+access-list {{ acl_rule.name }} line {{ rule.seq }} extended {{ rule.action }} object-group {{ rule.acl_ppsm }} object-group {{ rule.src_group  }} object-group {{ rule.dest_group  }} log
+{% endfor %}
+access-group {{ acl_rule.name }} {{ acl_rule.acl_flow }} interface {{ acl_rule.interface }}
+!
+{% endfor %}

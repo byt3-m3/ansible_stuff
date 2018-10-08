@@ -1,0 +1,85 @@
+
+object-group service NFS_PPSM
+ description PPSM for MGMT network
+ service-object tcp-udp destination eq 111
+ service-object tcp-udp destination eq 1039
+ service-object tcp-udp destination eq 1047
+ service-object tcp-udp destination eq 1048
+ service-object tcp-udp destination eq 2049
+!
+object-group service MGMT_PPSM
+ description PPSM for MGMT network
+ service-object tcp destination eq 22
+ service-object tcp destination eq 443
+ service-object tcp destination eq 8080
+ service-object tcp destination eq 80
+!
+object-group service WEB_PPSM
+ description PPSM for MGMT network
+ service-object tcp destination eq 443
+ service-object tcp-UDP destination eq 53
+ service-object tcp destination eq 8080
+ service-object tcp destination eq 80
+!
+object-group service WINDOWS_PPSM
+ description PPSM for MGMT network
+ service-object tcp destination eq 445
+ service-object tcp destination eq 135
+!
+!
+object-group network HQ_MGMT_NETS
+ description Network object for HQ managment networks
+ network-object 10.1.0.0 255.255.255.0
+!
+object-group network INSIDE_NETS
+ description Network object for Internal network
+ network-object 10.1.100.0 255.255.255.248
+ network-object 10.1.10.0 255.255.255.0
+!
+object-group network DMZ200_NETS
+ description Network object for DMZ200 networks
+ network-object 172.16.200.0 255.255.255.0
+!
+object-group network ANY_NET
+ description Network object for Any network
+ network-object 0.0.0.0 0.0.0.0
+!
+object-group network NFS_SERVER
+ description Network object for Any network
+ network-object 192.168.1.4 255.255.255.255
+!
+object-group network EXTERNAL_NETS
+ description Network object for Internal network
+ network-object 155.0.0.1 255.255.255.255
+!
+!
+access-list INSIDE-OUT remark ###############################################
+access-list INSIDE-OUT remark #     Rule for Rules for Internal Networks
+access-list INSIDE-OUT remark ###############################################
+access-list INSIDE-OUT line 10 extended permit object-group WEB_PPSM object-group INSIDE_NETS object-group DMZ200_NETS log
+access-list INSIDE-OUT line 20 extended permit object-group WEB_PPSM object-group INSIDE_NETS object-group EXTERNAL_NETS log
+access-list INSIDE-OUT line 30 extended permit object-group WINDOWS_PPSM object-group INSIDE_NETS object-group NFS_SERVER log
+access-list INSIDE-OUT line 100 extended permit object-group WEB_PPSM object-group INSIDE_NETS object-group ANY_NET log
+access-list INSIDE-OUT line 200 extended permit object-group ICMP_PPSM object-group INSIDE_NETS object-group ANY_NET log
+access-group INSIDE-OUT in interface INSIDE
+!
+access-list OUTSIDE-IN remark ###############################################
+access-list OUTSIDE-IN remark #     Rule for Rules for External Networks
+access-list OUTSIDE-IN remark ###############################################
+access-list OUTSIDE-IN line 10 extended permit object-group MGMT_PPSM object-group EXTERNAL_NETS object-group DMZ200_NETS log
+access-list OUTSIDE-IN line 20 extended permit object-group WEB_PPSM object-group EXTERNAL_NETS object-group INSIDE_NETS log
+access-list OUTSIDE-IN line 200 extended permit object-group ICMP_PPSM object-group EXTERNAL_NETS object-group ANY_NET log
+access-group OUTSIDE-IN in interface OUTSIDE
+!
+access-list DMZ200-OUT remark ###############################################
+access-list DMZ200-OUT remark #     Rule for Rules for DMZ200 Server Networks
+access-list DMZ200-OUT remark ###############################################
+access-list DMZ200-OUT line 10 extended permit object-group MGMT_PPSM object-group DMZ200_NETS object-group INSIDE_NETS log
+access-list DMZ200-OUT line 20 extended permit object-group WEB_PPSM object-group DMZ200_NETS object-group INSIDE_NETS log
+access-list DMZ200-OUT line 30 extended permit object-group WINDOWS_PPSM object-group DMZ200_NETS object-group INSIDE_NETS log
+access-list DMZ200-OUT line 40 extended permit object-group NFS_PPSM object-group DMZ200_NETS object-group NFS_SERVER log
+access-list DMZ200-OUT line 50 extended permit object-group MGMT_PPSM object-group DMZ200_NETS object-group HQ_MGMT_NETS log
+access-list DMZ200-OUT line 100 extended permit object-group WEB_PPSM object-group DMZ200_NETS object-group ANY_NET log
+access-list DMZ200-OUT line 200 extended permit object-group ICMP_PPSM object-group DMZ200_NETS object-group ANY_NET log
+access-group DMZ200-OUT in interface DMZ200_SERVERS
+!

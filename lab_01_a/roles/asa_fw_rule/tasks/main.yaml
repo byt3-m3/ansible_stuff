@@ -1,0 +1,12 @@
+---
+- name: Creating FW rule templates..
+  template:
+    src: fw_rule.j2
+    dest: config/fw_rules/{{ hostname }}_RULES.txt
+  delegate_to: localhost
+
+- name: Pushing Rules to ..
+  asa_config:
+    src: fw_rule.j2
+  become: yes
+

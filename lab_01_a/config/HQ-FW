@@ -1,0 +1,45 @@
+hostname HQ-FW
+!
+username ansible privilege 15
+username ansible password ansible
+!
+!
+interface Gi 0/0
+ nameif OUTSIDE
+ security-level 0
+ ip address 10.1.2.2 255.255.255.255
+!
+!
+interface Gi 0/1
+ nameif ENTVPN
+ security-level 100
+ ip address 10.1.0.1 255.255.255.255
+!
+!
+interface Gi 0/2.99
+ vlan 99
+ nameif INTERNAL_MGMT
+ security-level 100
+ ip address 10.1.0.2 255.255.255.0
+!
+!
+interface Gi 0/2.100
+ vlan 100
+ nameif INSIDE
+ security-level 100
+ ip address 10.1.100.1 255.255.255.248
+!
+!
+interface Gi 0/2.200
+ vlan 200
+ nameif DMZ200_SERVERS
+ security-level 50
+ ip address 172.16.200.254 255.255.255.0
+!
+!
+route OUTSIDE 0.0.0.0 0.0.0.0 10.1.2.2
+!
+object-group service ICMP_PPSM
+ service-object icmp time-exceeded
+ service-object icmp unreachable
+ service-object icmp echo-reply

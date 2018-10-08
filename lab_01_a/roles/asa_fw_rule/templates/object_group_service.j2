@@ -1,0 +1,8 @@
+{% for service_group in service_groups %}
+object-group service {{ service_group.name }}
+ description {{ service_group.description }}
+{% for port in service_group.ports %}
+ service-object {{ port.protocol }} destination eq {{ port.number }}
+{% endfor %}
+!
+{% endfor %}

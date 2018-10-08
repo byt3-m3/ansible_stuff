@@ -1,0 +1,81 @@
+config t
+alias exec siu show ip int br | inc up
+alias exec sid show ip int br | inc down
+alias exec siro show ip route ospf
+alias exec siro3 show ip route ospfv3
+alias exec sire show ip route eigrp
+alias exec sirb show ip route bgp
+alias exec sic show ip cef
+alias exec sir show ip route
+alias exec siv show ip vrf
+alias exec sib show ip bgp
+alias exec sibv4a show ip bgp vpnv4 all
+alias exec sbv4 show bgp vpnv4 unicast all summary
+alias exec srb show run | sec router bgp
+alias exec sro show run | sec router ospf
+alias exec sro3 show run | sec router ospfv3
+alias exec sre show run | sec router eigrp
+alias exec srr show run | sec route-map!
+hostname HQ-CORE-SW1
+!
+spanning-tree mode rapid-pvst
+!
+interface vlan 99
+ description MGMT_IP
+ no switchport
+ ip address 10.1.0.3 255.255.255.0
+ no shutdown
+!
+interface vlan 100
+ description FW_GW
+ no switchport
+ ip address 10.1.100.2 255.255.255.248
+ no shutdown
+!
+interface eth0/0
+ description Uplink to TCF-SW1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface eth0/1
+ description Downlink to BLD1-SW1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface eth0/3
+ description Crosslink to CORE-SW2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface eth1/0
+ description Downlink to DC-SW1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface eth1/1
+ description Downlink to DC-SW2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+!
+exit
+!
+vlan 99
+ name MGMT
+ exit
+!
+!
+vlan 100
+ name FW_GW
+ exit
+!
+!
+line con 0
+ exec-timeout 0 0
+ logging synchronous
+!
+line vty 0 4
+ logging synchronous
+ login local
+end
+wr

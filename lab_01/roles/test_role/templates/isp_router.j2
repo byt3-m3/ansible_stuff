@@ -1,6 +1,6 @@
 hostname {{ item.hostname }}
 !
-{% include "aliases.j2" %}
+{% include "../../../../lab_01_a/roles/base_ios_router_config/templates/aliases.j2" %}
 !
 !
 ip domain-name lab.local
@@ -25,4 +25,4 @@ interface {{ link.id }}
 ip nat inside source list 1 interface eth0/0 overload
 !
 {% include "bgp_base.j2" %}
-{% include "console.j2" %}
+{% include "../../../../lab_01_a/roles/base_ios_router_config/templates/console.j2" %}

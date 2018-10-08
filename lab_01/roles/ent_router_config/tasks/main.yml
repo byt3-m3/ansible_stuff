@@ -2,4 +2,4 @@
 - name: Generating basic configuration for enterprise routers
   template: src=ent_router_config.j2 dest=config/{{ item.hostname }}.txt
   with_items:
-  - "{{ hostvars['vars']['configs'] }}"
+  - "{{ hostvars['host_vars']['configs'] }}"

@@ -4,6 +4,6 @@
   gather_facts: False
   roles:
     - routers
-#  vars:
+#  host_vars:
 #    device:
 #      hostname: my_hostname

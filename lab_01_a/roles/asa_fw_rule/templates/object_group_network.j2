@@ -1,0 +1,8 @@
+{% for network_group in network_groups %}
+object-group network {{ network_group.name }}
+ description {{ network_group.description }}
+{% for subnet in network_group.subnets %}
+ network-object {{ subnet }}
+{% endfor %}
+!
+{% endfor %}

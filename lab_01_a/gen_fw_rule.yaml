@@ -1,0 +1,13 @@
+---
+- hosts: hq-fw
+  gather_facts: no
+  name: Buildin rule set for hq-fw
+  roles:
+  - asa_fw_rule
+
+
+#- hosts: hq-fw
+#  gather_facts: no
+#  name: Buildin config hq-fw
+#  roles:
+#  - base_asa_config

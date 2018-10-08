@@ -1,0 +1,36 @@
+hostname: HQ-TOR-SW1
+router_id: 10.1.0.7
+vlans:
+- id: 99
+  name: MGMT
+- id: 100
+  name: SERVERS
+links:
+- id: vlan 99
+  description: MGMT_IP
+  link_type: l3
+  ip_addr: 10.1.0.7 255.255.255.0
+
+- id: eth0/0
+  description: Uplink to DC-SW2
+  switchport_mode: trunk
+  link_type: l2
+  allowed_vlans: all
+
+- id: eth0/1
+  description: Uplink to DC-SW2
+  switchport_mode: trunk
+  link_type: l2
+  allowed_vlans: all
+
+- id: eth0/2
+  description: Downlink to ANSIBLE_SERVER
+  switchport_mode: access
+  link_type: l2
+  access_vlan: 100
+
+- id: eth1/0
+  description: Downlink to OBSERVIUM_SERVER
+  switchport_mode: access
+  link_type: l2
+  access_vlan: 100

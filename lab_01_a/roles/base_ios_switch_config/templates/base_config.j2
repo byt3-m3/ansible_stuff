@@ -1,12 +1,11 @@
 config t
-{% include "../../../../lab_01_a/roles/base_ios_router_config/templates/aliases.j2" %}
+{% include "aliases.j2" %}
 !
-hostname {{ item.hostname }}
+hostname {{ hostname }}
 !
 spanning-tree mode rapid-pvst
 !
-{% for link in item.links %}
-!
+{% for link in links %}
 interface {{ link.id }}
  description {{ link.description }}
 {% if link.link_type == "l3" %}
@@ -15,21 +14,26 @@ interface {{ link.id }}
  no shutdown
 !
 {% elif link.link_type == "l2" %}
+{% if link.switchport_mode == "trunk" %}
  switchport trunk encapsulation dot1q
  switchport mode trunk
+{% elif link.switchport_mode == "access" %}
+ switchport mode access
+ switchport access vlan {{ link.access_vlan }}
+{% endif %}
 !
 {% endif %}
 {% endfor %}
 !
 exit
-{% for vlan in item.vlans %}
+{% for vlan in vlans %}
 !
 vlan {{ vlan.id }}
  name {{ vlan.name }}
  exit
 !
 {% endfor %}
-{% include  "../../../../lab_01_a/roles/base_ios_router_config/templates/console.j2" %}
+{% include "console.j2" %}
 
 end
 wr

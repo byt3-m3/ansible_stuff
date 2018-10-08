@@ -1,0 +1,24 @@
+hostname {{ hostname }}
+!
+username ansible privilege 15
+username ansible password ansible
+!
+{% for link in links %}
+!
+interface {{ link.id }}
+{% if link.vlan is defined %}
+ vlan {{ link.vlan }}
+{% else %}
+{% endif %}
+ nameif {{ link.name }}
+ security-level {{ link.security_level }}
+ ip address {{ link.ip_addr }}
+!
+{% endfor %}
+!
+route OUTSIDE 0.0.0.0 0.0.0.0 {{ default_gw }}
+!
+object-group service ICMP_PPSM
+ service-object icmp time-exceeded
+ service-object icmp unreachable
+ service-object icmp echo-reply
