@@ -1,0 +1,228 @@
+all:
+  hosts:
+    localhost:
+      ansible_connection: local
+    hq-fw:
+      hostname: HQ-FW
+      ansible_ssh_host: hq-fw.lab.local
+      ansible_ssh_user: ansible
+      ansible_ssh_pass: ansible
+      ansible_become_pass: ansible
+      ansible_connection: network_cli
+      ansible_network_os: asa
+      ansible_become_method: enable
+      router_id: 10.1.0.2
+      default_gw: 10.1.2.2
+      service_groups:
+      - name: NFS_PPSM
+        description: PPSM for MGMT network
+        ports:
+        - number: 111
+          protocol: tcp-udp
+        - number: 1039
+          protocol: tcp-udp
+        - number: 1047
+          protocol: tcp-udp
+        - number: 1048
+          protocol: tcp-udp
+        - number: 2049
+          protocol: tcp-udp
+
+      - name: MGMT_PPSM
+        description: PPSM for MGMT network
+        ports:
+        - number: 22
+          protocol: tcp
+        - number: 443
+          protocol: tcp
+        - number: 8080
+          protocol: tcp
+        - number: 80
+          protocol: tcp
+
+      - name: WEB_PPSM
+        description: PPSM for MGMT network
+        ports:
+        - number: 443
+          protocol: tcp
+        - number: 53
+          protocol: tcp-UDP
+        - number: 8080
+          protocol: tcp
+        - number: 80
+          protocol: tcp
+
+      - name: WINDOWS_PPSM
+        description: PPSM for MGMT network
+        ports:
+        - number: 445
+          protocol: tcp
+        - number: 135
+          protocol: tcp
+
+      network_groups:
+      - name: HQ_MGMT_NETS
+        description: Network object for HQ managment networks
+        subnets:
+        - 10.1.0.0 255.255.255.0
+
+      #
+      #      - name: HQ_MGMT_NETS_TEST
+      #        description: Network object for HQ managment networks
+      #        subnets:
+      #        - 10.1.0.0 255.255.255.0
+
+
+      - name: INSIDE_NETS
+        description: Network object for Internal network
+        subnets:
+        - 10.1.100.0 255.255.255.248
+        - 10.1.10.0 255.255.255.0
+
+      - name: DMZ200_NETS
+        description: Network object for DMZ200 networks
+        subnets:
+        - 172.16.200.0 255.255.255.0
+
+      - name: ANY_NET
+        description: Network object for Any network
+        subnets:
+        - 0.0.0.0 0.0.0.0
+
+      - name: NFS_SERVER
+        description: Network object for Any network
+        subnets:
+        - 192.168.1.4 255.255.255.255
+
+      - name: EXTERNAL_NETS
+        description: Network object for Internal network
+        subnets:
+        - 155.0.0.1 255.255.255.255
+
+      acls:
+      - name: INSIDE-OUT
+        acl_flow: in
+        interface: INSIDE
+        description: Rules for Internal Networks
+        rules:
+        - seq: 10
+          action: permit
+          src_group: INSIDE_NETS
+          dest_group: DMZ200_NETS
+          acl_ppsm: WEB_PPSM
+          status: active
+
+        - seq: 20
+          action: permit
+          src_group: INSIDE_NETS
+          dest_group: EXTERNAL_NETS
+          acl_ppsm: WEB_PPSM
+          status: active
+
+        - seq: 25
+          action: permit
+          src_group: INSIDE_NETS
+          dest_group: NFS_SERVER
+          acl_ppsm: ICMP_PPSM
+          status: inactive
+
+        - seq: 30
+          action: permit
+          src_group: INSIDE_NETS
+          dest_group: NFS_SERVER
+          acl_ppsm: WINDOWS_PPSM
+          status: active
+
+        - seq: 100
+          action: permit
+          src_group: INSIDE_NETS
+          dest_group: ANY_NET
+          acl_ppsm: WEB_PPSM
+          status: active
+
+        - seq: 200
+          action: permit
+          src_group: INSIDE_NETS
+          dest_group: ANY_NET
+          acl_ppsm: ICMP_PPSM
+          status: active
+
+      - name: OUTSIDE-IN
+        acl_flow: in
+        interface: OUTSIDE
+        description: Rules for External Networks
+        rules:
+        - seq: 10
+          action: permit
+          src_group: EXTERNAL_NETS
+          dest_group: DMZ200_NETS
+          acl_ppsm: MGMT_PPSM
+          status: active
+
+        - seq: 20
+          action: permit
+          src_group: EXTERNAL_NETS
+          dest_group: INSIDE_NETS
+          acl_ppsm: WEB_PPSM
+          status: active
+
+        - seq: 200
+          action: permit
+          src_group: EXTERNAL_NETS
+          dest_group: ANY_NET
+          acl_ppsm: ICMP_PPSM
+          status: active
+
+      - name: DMZ200-OUT
+        acl_flow: in
+        interface: DMZ200_SERVERS
+        description: Rules for DMZ200 Server Networks
+        rules:
+        - seq: 10
+          action: permit
+          src_group: DMZ200_NETS
+          dest_group: INSIDE_NETS
+          acl_ppsm: MGMT_PPSM
+          status: active
+
+        - seq: 20
+          action: permit
+          src_group: DMZ200_NETS
+          dest_group: INSIDE_NETS
+          acl_ppsm: WEB_PPSM
+          status: active
+
+        - seq: 30
+          action: permit
+          src_group: DMZ200_NETS
+          dest_group: INSIDE_NETS
+          acl_ppsm: WINDOWS_PPSM
+          status: active
+
+        - seq: 40
+          action: permit
+          src_group: DMZ200_NETS
+          dest_group: NFS_SERVER
+          acl_ppsm: NFS_PPSM
+          status: active
+
+        - seq: 50
+          action: permit
+          src_group: DMZ200_NETS
+          dest_group: HQ_MGMT_NETS
+          acl_ppsm: MGMT_PPSM
+          status: active
+
+        - seq: 100
+          action: permit
+          src_group: DMZ200_NETS
+          dest_group: ANY_NET
+          acl_ppsm: WEB_PPSM
+          status: active
+
+        - seq: 200
+          action: permit
+          src_group: DMZ200_NETS
+          dest_group: ANY_NET
+          acl_ppsm: ICMP_PPSM
+          status: active

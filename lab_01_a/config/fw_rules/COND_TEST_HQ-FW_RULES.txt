@@ -1,0 +1,22 @@
+!
+access-list INSIDE-OUT line 10 extended permit object-group WEB_PPSM object-group INSIDE_NETS object-group DMZ200_NETS log
+access-list INSIDE-OUT line 20 extended permit object-group WEB_PPSM object-group INSIDE_NETS object-group EXTERNAL_NETS log
+no access-list INSIDE-OUT extended permit object-group ICMP_PPSM object-group INSIDE_NETS object-group NFS_SERVER log
+access-list INSIDE-OUT line 30 extended permit object-group WINDOWS_PPSM object-group INSIDE_NETS object-group NFS_SERVER log
+access-list INSIDE-OUT line 100 extended permit object-group WEB_PPSM object-group INSIDE_NETS object-group ANY_NET log
+access-list INSIDE-OUT line 200 extended permit object-group ICMP_PPSM object-group INSIDE_NETS object-group ANY_NET log
+access-group INSIDE-OUT in interface INSIDE
+!
+access-list OUTSIDE-IN line 10 extended permit object-group MGMT_PPSM object-group EXTERNAL_NETS object-group DMZ200_NETS log
+access-list OUTSIDE-IN line 20 extended permit object-group WEB_PPSM object-group EXTERNAL_NETS object-group INSIDE_NETS log
+access-list OUTSIDE-IN line 200 extended permit object-group ICMP_PPSM object-group EXTERNAL_NETS object-group ANY_NET log
+access-group OUTSIDE-IN in interface OUTSIDE
+!
+access-list DMZ200-OUT line 10 extended permit object-group MGMT_PPSM object-group DMZ200_NETS object-group INSIDE_NETS log
+access-list DMZ200-OUT line 20 extended permit object-group WEB_PPSM object-group DMZ200_NETS object-group INSIDE_NETS log
+access-list DMZ200-OUT line 30 extended permit object-group WINDOWS_PPSM object-group DMZ200_NETS object-group INSIDE_NETS log
+access-list DMZ200-OUT line 40 extended permit object-group NFS_PPSM object-group DMZ200_NETS object-group NFS_SERVER log
+access-list DMZ200-OUT line 50 extended permit object-group MGMT_PPSM object-group DMZ200_NETS object-group HQ_MGMT_NETS log
+access-list DMZ200-OUT line 100 extended permit object-group WEB_PPSM object-group DMZ200_NETS object-group ANY_NET log
+access-list DMZ200-OUT line 200 extended permit object-group ICMP_PPSM object-group DMZ200_NETS object-group ANY_NET log
+access-group DMZ200-OUT in interface DMZ200_SERVERS

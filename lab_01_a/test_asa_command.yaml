@@ -1,0 +1,75 @@
+---
+- hosts: hq-fw
+  gather_facts: no
+  name: Testing asa_command module.
+
+  tasks:
+    - name: Checking {{ ansible_ssh_host }} if ACLs are actively on the device.
+      become: yes
+      asa_command:
+        commands:
+          - show run access-list {{ item.name }}
+      register: acl_results
+      with_items:
+        - "{{ acls }}"
+      loop_control:
+        label: "{{ item.name }}"
+
+
+    - name: Checking if Network Object-Groups are present.
+      become: yes
+      asa_command:
+        wait_for:
+          - result[0] contains 'object-group network'
+        commands:
+          - show run object-group id {{ item.name }}
+      register: net_obj_group_results
+      with_items:
+        - "{{ network_groups }}"
+      loop_control:
+        label: "{{ item.name }}"
+
+
+    - name: Pushing ACL Configuraiton to {{ ansible_ssh_host }}
+      register: push_result
+      asa_config:
+        src: roles/asa_fw_rule/templates/new_fw_rule.j2
+      become: yes
+
+
+    - name: Savig ACL rules to "/configs/fw_rules"
+      template:
+        src: roles/asa_fw_rule/templates/new_fw_rule.j2
+        dest: config/fw_rules/COND_TEST_{{ hostname }}_RULES.txt
+      delegate_to: localhost
+#      when:
+#        - asa_command_output is failed
+
+#    - name: Searching for failed object-group results.
+#      become: yes
+#      register: fail_check
+#      fail:
+#        msg: "object-group '{{ item.item.name }}' Not Found on {{ ansible_ssh_host }}"
+#      when:
+#        - item is failed
+#      with_items:
+#        - "{{ net_obj_group_results.results }}"
+#      loop_control:
+#        label:
+#          - "{{ item.item.name }}"
+
+
+#
+#    - name: ACL Found.
+#      become: yes
+#      asa_command:
+#        commands:
+#          - show route
+#      when:
+##        - asa_command_output is falied
+    - name: Debug Testing
+      debug:
+        msg: "{{ push_result }}"
+#        msg: "{{ item.stdout[0] | regex_search('.*does not exist') }}"
+#      with_items:
+#       - "{{ net_obj_group_results.results }}"

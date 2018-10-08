@@ -1,0 +1,13 @@
+{% for acl_rule in acls %}
+!
+{% for rule in acl_rule.rules %}
+{% if rule.status is defined %}
+{% if rule.status == "inactive" %}
+no access-list {{ acl_rule.name }} extended {{ rule.action }} object-group {{ rule.acl_ppsm }} object-group {{ rule.src_group  }} object-group {{ rule.dest_group  }} log
+{% elif rule.status == "active" %}
+access-list {{ acl_rule.name }} line {{ rule.seq }} extended {{ rule.action }} object-group {{ rule.acl_ppsm }} object-group {{ rule.src_group  }} object-group {{ rule.dest_group  }} log
+{% endif %}
+{% endif %}
+{% endfor %}
+access-group {{ acl_rule.name }} {{ acl_rule.acl_flow }} interface {{ acl_rule.interface }}
+{% endfor %}
