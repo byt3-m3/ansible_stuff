@@ -12,7 +12,7 @@ yourself going off on the deep end pretty easily so lets address my problem.
 #### Requirements:
  - need a way to push ACLs to my device
  - ability to maintain the current configuration state of my firewall.
- - I need a tool that error checks for pre-existing object-groups and ACLs
+ - I need a tool that error checks for pre-existing object-groups and ACLs, Will not post if ACLs are not found.
  - standardization of ACL rules
  - need a text file generated containing ACL rules for auditors 
  
@@ -210,7 +210,7 @@ it offers way more flexibility especially when you start to use Jinja2 condition
     def do_something(acl: object):
         return acl
         
-    # Standard whileloop   
+    # Standard for loop   
     for acl in acl_list:
      do_something(acl)
     
@@ -245,4 +245,116 @@ data structure. which can be allot of jumbled text if you have complex data stru
     ```
 
 - **register:** This is used when you would like to store the variable of the executed task to more verifiable variable name. This command can help 
-make your playbooks more readable and easier to follow was the default stdout can be confusing no beginning ansible users. 
+make your playbooks more readable and easier to follow was the default stdout can be confusing no beginning ansible users.
+
+
+Now lets take a look at the playbook and talk about whats going on. This playbook is fairly simple as it only contains 5 task.
+In order this is what is happening.
+
+1. Checks the firewall if ACLs are on the device
+2. Checks the firewall if Object groups are on the device 
+3. Pushes the Jinja2 template configuration to the firewall
+4. Save a copy of the configuration to specified directory.
+5. Prints the list of lines pushed to the device. 
+
+```yaml
+- hosts: hq-fw
+  gather_facts: no
+  name: ASA FW Rule Demo
+
+  tasks:
+    - name: Checking {{ ansible_ssh_host }} if ACLs are actively on the device.
+      become: yes
+      asa_command:
+        commands:
+          - show run access-list {{ item.name }}
+      register: acl_results
+      with_items:
+        - "{{ acls }}"
+      loop_control:
+        label: "{{ item.name }}"
+
+
+    - name: Checking if Network Object-Groups are present.
+      become: yes
+      asa_command:
+        wait_for:
+          - result[0] contains 'object-group network'
+        commands:
+          - show run object-group id {{ item.name }}
+      register: net_obj_group_results
+      with_items:
+        - "{{ network_groups }}"
+      loop_control:
+        label: "{{ item.name }}"
+
+
+    - name: Pushing ACL Configuraiton to {{ ansible_ssh_host }}
+      register: push_result
+      asa_config:
+        src: roles/asa_fw_rule/templates/new_fw_rule.j2
+      become: yes
+
+
+    - name: Savig ACL rules to "/configs/fw_rules"
+      template:
+        src: roles/asa_fw_rule/templates/new_fw_rule.j2
+        dest: config/fw_rules/COND_TEST_{{ hostname }}_RULES.txt
+      delegate_to: localhost
+
+    - name: Debug Testing
+      debug:
+        msg: "{{ push_result }}"
+``` 
+Execution Results
+```text
+PLAY [ASA FW Rule Demo] ********************************************************
+
+TASK [Checking hq-fw.lab.local if ACLs are actively on the device.] ************
+ok: [hq-fw] => (item=INSIDE-OUT)
+ok: [hq-fw] => (item=OUTSIDE-IN)
+ok: [hq-fw] => (item=DMZ200-OUT)
+
+TASK [Checking if Network Object-Groups are present.] **************************
+ok: [hq-fw] => (item=HQ_MGMT_NETS)
+ok: [hq-fw] => (item=INSIDE_NETS)
+ok: [hq-fw] => (item=DMZ200_NETS)
+ok: [hq-fw] => (item=ANY_NET)
+ok: [hq-fw] => (item=NFS_SERVER)
+ok: [hq-fw] => (item=EXTERNAL_NETS)
+
+TASK [Pushing ACL Configuraiton to hq-fw.lab.local] ****************************
+changed: [hq-fw]
+
+TASK [Savig ACL rules to "/configs/fw_rules"] **********************************
+ok: [hq-fw -> localhost]
+
+TASK [Debug Testing] ***********************************************************
+ok: [hq-fw] => {
+    "msg": {
+        "changed": true, 
+        "failed": false, 
+        "updates": [
+            "access-list INSIDE-OUT line 10 extended permit object-group WEB_PPSM object-group INSIDE_NETS object-group DMZ200_NETS log", 
+            "access-list INSIDE-OUT line 20 extended permit object-group WEB_PPSM object-group INSIDE_NETS object-group EXTERNAL_NETS log", 
+            "no access-list INSIDE-OUT extended permit object-group ICMP_PPSM object-group INSIDE_NETS object-group NFS_SERVER log", 
+            "access-list INSIDE-OUT line 30 extended permit object-group WINDOWS_PPSM object-group INSIDE_NETS object-group NFS_SERVER log", 
+            "access-list INSIDE-OUT line 100 extended permit object-group WEB_PPSM object-group INSIDE_NETS object-group ANY_NET log", 
+            "access-list INSIDE-OUT line 200 extended permit object-group ICMP_PPSM object-group INSIDE_NETS object-group ANY_NET log", 
+            "access-list OUTSIDE-IN line 10 extended permit object-group MGMT_PPSM object-group EXTERNAL_NETS object-group DMZ200_NETS log", 
+            "access-list OUTSIDE-IN line 20 extended permit object-group WEB_PPSM object-group EXTERNAL_NETS object-group INSIDE_NETS log", 
+            "access-list OUTSIDE-IN line 200 extended permit object-group ICMP_PPSM object-group EXTERNAL_NETS object-group ANY_NET log", 
+            "access-list DMZ200-OUT line 10 extended permit object-group MGMT_PPSM object-group DMZ200_NETS object-group INSIDE_NETS log", 
+            "access-list DMZ200-OUT line 20 extended permit object-group WEB_PPSM object-group DMZ200_NETS object-group INSIDE_NETS log", 
+            "access-list DMZ200-OUT line 30 extended permit object-group WINDOWS_PPSM object-group DMZ200_NETS object-group INSIDE_NETS log", 
+            "access-list DMZ200-OUT line 40 extended permit object-group NFS_PPSM object-group DMZ200_NETS object-group NFS_SERVER log", 
+            "access-list DMZ200-OUT line 50 extended permit object-group MGMT_PPSM object-group DMZ200_NETS object-group HQ_MGMT_NETS log", 
+            "access-list DMZ200-OUT line 100 extended permit object-group WEB_PPSM object-group DMZ200_NETS object-group ANY_NET log", 
+            "access-list DMZ200-OUT line 200 extended permit object-group ICMP_PPSM object-group DMZ200_NETS object-group ANY_NET log"
+        ]
+    }
+}
+
+PLAY RECAP *********************************************************************
+hq-fw                      : ok=5    changed=1    unreachable=0    failed=0   
+```

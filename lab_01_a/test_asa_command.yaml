@@ -1,7 +1,7 @@
 ---
 - hosts: hq-fw
   gather_facts: no
-  name: Testing asa_command module.
+  name: ASA FW Rule Demo
 
   tasks:
     - name: Checking {{ ansible_ssh_host }} if ACLs are actively on the device.
@@ -42,34 +42,7 @@
         src: roles/asa_fw_rule/templates/new_fw_rule.j2
         dest: config/fw_rules/COND_TEST_{{ hostname }}_RULES.txt
       delegate_to: localhost
-#      when:
-#        - asa_command_output is failed
 
-#    - name: Searching for failed object-group results.
-#      become: yes
-#      register: fail_check
-#      fail:
-#        msg: "object-group '{{ item.item.name }}' Not Found on {{ ansible_ssh_host }}"
-#      when:
-#        - item is failed
-#      with_items:
-#        - "{{ net_obj_group_results.results }}"
-#      loop_control:
-#        label:
-#          - "{{ item.item.name }}"
-
-
-#
-#    - name: ACL Found.
-#      become: yes
-#      asa_command:
-#        commands:
-#          - show route
-#      when:
-##        - asa_command_output is falied
     - name: Debug Testing
       debug:
         msg: "{{ push_result }}"
-#        msg: "{{ item.stdout[0] | regex_search('.*does not exist') }}"
-#      with_items:
-#       - "{{ net_obj_group_results.results }}"
